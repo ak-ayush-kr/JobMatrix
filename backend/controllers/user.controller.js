@@ -48,12 +48,12 @@ export const login = async (req, res) => {
 
         let user = await User.findOne({ email, role });
         if (!user) {
-            return res.status(400).json({ message: 'Invalid credentials' });
+            return res.status(400).json({ message: 'user not registered' });
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
         if(!isMatch) {
-            return res.status(400).json({ message: 'Invalid credentials' });
+            return res.status(400).json({ message: 'wrong password' });
         }
 
         user = {
