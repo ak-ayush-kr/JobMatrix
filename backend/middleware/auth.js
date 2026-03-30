@@ -1,7 +1,7 @@
-import { JsonWebTokenError } from "jsonwebtoken";
-import jwt from "jsonwebtoken";
-import User from "../models/user.js";
 
+import jwt from "jsonwebtoken";
+import {User} from "../models/user.js";
+const { JsonWebTokenError } = jwt;
 const getUser = async (req, res, next) => {
     console.log("middleware has been called");
     try {
