@@ -10,6 +10,7 @@ export const register = async (req, res) => {
         if(!name || !email || !password || !phoneNumber || !role) {
             return res.status(400).json({ message: 'All fields are required' });
         }
+
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: 'User already exists' });
@@ -69,8 +70,13 @@ export const login = async (req, res) => {
         if(!isMatch) {
             return res.status(400).json({ message: 'wrong password' });
         }
-        
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+        const payload={
+            email:user.email,
+            id:user._id,
+            role:user.role
+        }
+        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' });
+        user=user.toObject();
         user.token = token;
         user.password = undefined;
 
@@ -79,11 +85,12 @@ export const login = async (req, res) => {
             sameSite: "lax",
             pqth: "/",
             secure: false,
-            domain: "localhost"
+            domain: "localhost",
+            httpOnly:true
         };
         console.log(token);
 
-        user = {
+        let userDetails = {
             _id: user._id,
             name: user.name,
             email: user.email,
@@ -92,9 +99,9 @@ export const login = async (req, res) => {
             profile: user.profile
         }
 
-        return res.status(200).cookie("token", user.token, options).json({
+        return res.status(200).cookie("token", token, options).json({
             message: 'Login successful',
-            user,
+            userDetails,
         }); 
     } catch (error) {
         console.error('Error in user login:', error);
