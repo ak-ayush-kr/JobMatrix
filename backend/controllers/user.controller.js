@@ -88,7 +88,6 @@ export const login = async (req, res) => {
             domain: "localhost",
             httpOnly:true
         };
-        console.log(token);
 
         let userDetails = {
             _id: user._id,
