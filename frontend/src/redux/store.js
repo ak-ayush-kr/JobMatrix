@@ -1,9 +1,11 @@
 import {configureStore,combineReducers} from '@reduxjs/toolkit';
 import authReducer from "./authslice";
+import jobReducer from "./jobslice";
 import {persistReducer,persistStore} from "redux-persist";
 
 const rootReducer = combineReducers({
     auth:authReducer,
+    job:jobReducer,
 });
 
 const storage = {

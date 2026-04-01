@@ -31,9 +31,9 @@ function Login() {
             body: JSON.stringify({ email, password, role }),
         });
         const data = await res.json();
-        console.log(data);
+        // console.log(data.userDetails);
         if(res.ok){
-            dispatch(setUser(data.user));
+            dispatch(setUser(data.userDetails));
             navigate("/userdashboard");
         }
     }catch (error) {
