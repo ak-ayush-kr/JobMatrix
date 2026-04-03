@@ -1,4 +1,4 @@
-
+import {Application} from "../models/application.js";
 import { Job } from "../models/job.js";
 
 export const postJob = async (req, res) => {
@@ -70,7 +70,7 @@ export const getAllJobs = async (req, res) => {
 export const getJobById = async (req, res) => {
   try {
     const jobId = req.params.id;
-    const job = await Job.findById(jobId).populate("applications");
+    const job = await Job.findById(jobId).populate("applications").populate("company");
 
     if (!job) {
       return res.status(404).json({
@@ -177,3 +177,24 @@ export const updateJob = async (req, res) => {
     });
   }
 };
+
+
+export const getAppliedJobs = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const jobs = await Job.find({ "applications.applicant": userId })
+      .populate("company");
+    
+    const result = jobs.map(job => {
+      const application = job.applications.find(app => app.applicant.toString() === userId);
+      return { 
+        ...job._doc,
+        applicationStatus: application ? application.status : "N/A" 
+      }
+    });
+    return res.status(200).json({message:"Applied jobs fetched successfully", jobs: result});
+  } catch (error) {
+    console.log("error while fetching users jobs",error);
+    return res.status(500).json({message:"server error while fetching applied jobs"});
+  }
+}
