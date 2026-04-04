@@ -1,18 +1,18 @@
 
 import { Job } from "../models/job.js";
-
+import { Application } from "../models/application.js";
 export const postJob = async (req, res) => {
   try {
     const { title,description,requirements,salary,location,jobType,experience,position,companyId} = req.body;
     const userId = req.user.id;
 
-    if ( !title || !description || !requirements || !salary || !location || !jobType || !experience || position == null || !companyId) {
+    if ( !title || !description || !requirements || !salary || !location || !jobType || !experience || position == null || !companyId || !userId) {
       return res.status(400).json({
         message: "Fill the complete form ",
         success: false,
       });
     }
-
+    console.log(userId);
     const job = await Job.create({
       title,
       description,
