@@ -5,6 +5,7 @@ import cloudinary from "../utils/cloudinary.js";
 
 //registering company by name and user id
 export const registerCompany=async(req,res)=>{
+    console.log("register company controller called");
     try{
         const {companyName}=req.body;
 
