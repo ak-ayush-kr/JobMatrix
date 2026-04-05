@@ -1,34 +1,71 @@
-import { useDispatch } from "react-redux";
-import { addCompany } from "../../redux/companySlice";
+import { useSelector } from "react-redux";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../utils/axios";
 
 const EnrollCompany = () => {
-  const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.company);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const [companyName, setCompanyName] = useState("");
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const form = e.target;
+    // 🔥 validation
+    if (!companyName.trim()) {
+      return alert("Company name required");
+    }
 
-    const company = {
-      name: form.name.value,
-      location: form.location.value,
-    };
+    try {
+      const res = await axiosInstance.post(
+        "/company/registerCompany",
+        { companyName }
+      );
 
-    dispatch(addCompany(company));
-    alert("Company Added!");
+      console.log("API response:", res.data); // debug
+
+      alert("✅ Company Registered Successfully");
+
+      // 🔥 redirect to update page
+      navigate(`/update-company/${res.data.data._id}`);
+
+      // 🔥 clear input
+      setCompanyName("");
+
+    } catch (err) {
+      console.log(err.response?.data || err);
+      alert(err.response?.data?.message || "❌ Failed to register company");
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-6">
-      <h2 className="text-xl mb-4">Enroll Company</h2>
+    <div className="max-w-md mx-auto bg-white shadow-lg rounded-2xl p-6 mt-10">
+      <h2 className="text-2xl font-semibold mb-6 text-center">
+        Register Company
+      </h2>
 
-      <input name="name" placeholder="Company Name" className="border p-2 block mb-3" />
-      <input name="location" placeholder="Location" className="border p-2 block mb-3" />
+      <form onSubmit={handleSubmit} className="space-y-4">
 
-      <button className="bg-blue-500 text-white px-4 py-2">
-        Submit
-      </button>
-    </form>
+        <input
+          type="text"
+          name="companyName"
+          placeholder="Enter Company Name"
+          value={companyName}
+          onChange={(e) => setCompanyName(e.target.value)}
+          className="w-full border p-3 rounded outline-none focus:ring-2 focus:ring-green-500"
+        />
+
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
+        >
+          {loading ? "Registering..." : "Register Company"}
+        </button>
+
+      </form>
+    </div>
   );
 };
 

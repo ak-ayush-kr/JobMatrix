@@ -73,7 +73,7 @@ export const getCompany = async (req, res) => {
         res.status(500).json({
             success:false,
             data:"error while fetching all company",
-            message:e.message
+            message:error.message
         })
     }
 };
@@ -102,7 +102,7 @@ export const getCompanyById = async (req, res) => {
         res.status(500).json({
             success:false,
             data:"No company exist with this id or maybe some error",
-            message:e.message
+            message:error.message
         })
     }
 };

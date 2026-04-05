@@ -7,7 +7,7 @@ router.post("/postJob",getUser,postJob);
 router.get("/getAllJobs",getUser,getAllJobs);
 router.get("/getJobById/:id",getUser,getJobById);
 router.get("/getAdminJobs",getUser,getAdminJobs);
-router.get("/updateJob/:id",getUser,updateJob);
+router.put("/updateJob/:id",getUser,updateJob);
 router.get("/getAppliedjobs",getUser,getAppliedJobs);
 
 export default router;

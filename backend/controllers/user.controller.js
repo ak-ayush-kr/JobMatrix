@@ -83,7 +83,7 @@ export const login = async (req, res) => {
         const options = {
             expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
             sameSite: "lax",
-            pqth: "/",
+            path: "/",
             secure: false,
             domain: "localhost",
             httpOnly: true
