@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react';
 import Navbar from '../components/Navbar'
+import Footbar from '../components/footer';
 import { Building } from 'lucide-react';
 
 const statusColors = {
@@ -51,7 +52,7 @@ const Myjobs = () => {
 
   return (
     <div className='bg-white w-full min-h-screen'>
-      <Navbar active="myjobs" />
+      <Navbar active="My Jobs" />
       <div className='w-full bg-linear-to-r from-blue-100 to-white flex items-center justify-center'>
         <h1 className='text-3xl font-bold text-blue-500 py-10'>My Jobs</h1>
       </div>
@@ -92,6 +93,7 @@ const Myjobs = () => {
           </div>
         )}
       </div>
+      <Footbar/>
     </div>
   )
 }

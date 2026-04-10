@@ -1,5 +1,6 @@
 import { useState, useRef,useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   User, Mail, Phone, FileText, Upload, X, Plus,
   Save, ArrowLeft, Camera, Briefcase, CheckCircle, AlertCircle, Paperclip
@@ -12,7 +13,7 @@ function Profile() {
     phoneNumber: "",
     bio: "",
   });
-
+  const navigate = useNavigate();
   const {user,isAuthenticated} = useSelector((state) => state.auth);
   const [errors, setErrors] = useState({});
   const [skills, setSkills] = useState(["Figma", "React", "UX Research", "Tailwind CSS", "Prototyping"]);
@@ -56,12 +57,6 @@ function Profile() {
     if (errors[name]) setErrors((er) => ({ ...er, [name]: undefined }));
   };
 
-  const handleSave = () => {
-    const errs = validate();
-    if (Object.keys(errs).length > 0) { setErrors(errs); return; }
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
-  };
 
   const addSkill = () => {
     const trimmed = skillInput.trim();
@@ -127,7 +122,8 @@ function Profile() {
       <div className="relative z-10 max-w-3xl mx-auto px-4 py-10">
         {/* Top Nav */}
         <div className="flex items-center gap-3 mb-8">
-          <button className="flex items-center gap-2 text-[#64748b] hover:text-[#94a3b8] text-sm transition-colors duration-150 group">
+          <button className="flex items-center gap-2 text-[#64748b] hover:text-[#94a3b8] text-sm transition-colors duration-150 group"
+          onClick={()=>{navigate("/userdashboard")}}>
             <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform duration-150" />
             Back to Home
           </button>
