@@ -3,6 +3,7 @@ import { ChevronRight } from "lucide-react";
 import Navbar from "../components/Navbar";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/footer";
 
 function Alljobs() {
   const job = useSelector((state) => state.job.jobs);
@@ -86,10 +87,10 @@ function Alljobs() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Navbar active="Home" />
+      <Navbar active="All Jobs" />
 
       {/* Hero */}
-      <section className="bg-linear-to-br from-blue-700 via-blue-600 to-indigo-700 text-center py-12">
+      <section className="bg-linear-to-br from-blue-700 via-blue-600 to-indigo-700 text-center py-8">
         <h1 className="text-3xl font-bold text-white">
           Explore Opportunities at JobMatrix
         </h1>
@@ -127,9 +128,9 @@ function Alljobs() {
               {filteredJobs?.map((jobs) => (
                 <div
                   key={jobs._id}
-                  className="rounded-2xl shadow-md p-5 bg-white hover:shadow-lg transition"
+                  className="rounded-2xl border-t-2 shadow-lg p-5 bg-white hover:shadow-xl transition"
                 >
-                  <h2 className="font-bold text-lg">{jobs.title}</h2>
+                  <h2 className="font-bold text-lg text-gray-900">{jobs.title}</h2>
                   <p className="text-blue-600 text-sm">
                     {jobs.company?.name}
                   </p>
@@ -181,6 +182,7 @@ function Alljobs() {
           </div>
         </div>
       )}
+      <Footer/>
     </div>
   );
 }

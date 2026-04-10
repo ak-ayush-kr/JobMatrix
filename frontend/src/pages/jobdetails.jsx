@@ -2,8 +2,10 @@ import { use, useState,useEffect } from "react";
 import {MapPin, DollarSign, Briefcase, Clock, Users, Building2,CalendarDays, CheckCircle2, ChevronRight, Star, Zap,TrendingUp, Award, 
 ExternalLink, BookOpen, Globe} from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/navbar";
+import Navbar from "../components/Navbar";
+import Footer from "../components/footer";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 
 const jobData = {
@@ -50,17 +52,18 @@ const daysAgo = (dateStr) => {
 function JobDetailsPage() {
   const [applied, setApplied] = useState(jobData.alreadyApplied);
   const [saved, setSaved] = useState(false);
+  const [jobs, setJobs] = useState([]);
   const job = jobData;
   const { user, isAuthenticated } = useSelector((state) => state.auth);
   const userId = user._id;
-  const hasapplied = job.applications.some(
-    (app)=>app.applicant === userId
+  const hasapplied = jobs?.applications?.some(
+    (app)=>app?.applicant === userId
   );
 
   const {jobId} = useParams();
   console.log("Job ID from URL:", jobId);
-  const [jobs, setJobs] = useState([]);
-  const navigate = useNavigate();
+
+
 
   useEffect(() => {
     const getjobdetails = async () => {
@@ -94,7 +97,7 @@ function JobDetailsPage() {
           <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 hover:shadow-md transition-shadow duration-300">
             <div className="flex items-start gap-4">
               <div className="w-16 h-16 rounded-2xl bg-linear-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-xl shadow-md shrink-0">
-                {job.companyInitials}
+                {"C"}
               </div>
 
               {/* Title Area */}
@@ -308,22 +311,7 @@ function JobDetailsPage() {
       </div>
 
       {/* Footer */}
-      <footer className="mt-10 border-t border-slate-100 bg-white">
-        <div className="max-w-6xl mx-auto px-4 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-          <div className="flex items-center gap-2">
-            <div className="w-5 h-5 bg-blue-600 rounded flex items-center justify-center">
-              <Briefcase size={12} className="text-white" />
-            </div>
-            <span className="font-bold text-slate-600">JobMatrix</span>
-            <span>© 2025 All rights reserved.</span>
-          </div>
-          <div className="flex gap-5">
-            <a href="#" className="hover:text-blue-600 transition-colors">Privacy</a>
-            <a href="#" className="hover:text-blue-600 transition-colors">Terms</a>
-            <a href="#" className="hover:text-blue-600 transition-colors">Help</a>
-          </div>
-        </div>
-      </footer>
+      <Footer/>
     </div>
   );
 }

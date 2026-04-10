@@ -10,12 +10,13 @@ const Navbar = (props) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const { user, isAuthenticated } = useSelector((state) => state.auth);
-  console.log("user is",user.name);
+ 
+  console.log("photo is");
 
   const navItems = [
-    { label: "Home", icon: "⊞" },
-    { label: "My Jobs", icon: "📁" },
-    { label: "All Jobs", icon: "🔍" },
+    { label: "Home", icon: "⊞" ,path:"/userdashboard"},
+    { label: "My Jobs", icon: "📁" ,path:"/myjobs"},
+    { label: "All Jobs", icon: "🔍", path:"/alljobs" },
   ];
 
   return (
@@ -23,7 +24,7 @@ const Navbar = (props) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center gap-2 flex-shrink-0">
+          <div className="flex items-center gap-2 shrink-0">
             <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center shadow-sm">
               <Briefcase size={14} className="text-white" />
             </div>
@@ -37,7 +38,7 @@ const Navbar = (props) => {
             {navItems.map((item) => (
               <button
                 key={item.label}
-                onClick={() => setActiveNav(item.label)}
+                onClick={() => { setActiveNav(item.label); navigate(item.path); }}
                 className={`nav-link flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium transition-all ${activeNav === item.label
                   ? "bg-blue-50 text-blue-600"
                   : "text-gray-500 hover:bg-gray-50 hover:text-gray-800"
@@ -51,10 +52,12 @@ const Navbar = (props) => {
 
           {/* Right side */}
           <div className="flex items-center gap-3">
+            <button onClick={()=>{navigate("/profile")}}>
             <div className="hidden sm:flex items-center gap-2 bg-gray-50 rounded-xl px-3 py-1.5 cursor-pointer hover:bg-gray-100 transition-colors">
-              <img src={user?.profilePhoto} alt="profile" className="w-7 h-7 rounded-full object-cover" />
+              <img src={user.profile?.profilePhoto} alt="profile" className="w-7 h-7 rounded-full object-cover" />
               <span className="text-sm font-medium text-gray-700">{user.name || "User"}</span>
             </div>
+            </button>
             <button className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium text-red-500 hover:bg-red-50 transition-all border border-transparent hover:border-red-100">
               <span>↗</span>
               <span className="hidden sm:block">Logout</span>
@@ -72,7 +75,7 @@ const Navbar = (props) => {
           {navItems.map((item) => (
             <button
               key={item.label}
-              onClick={() => { setActiveNav(item.label); setMobileMenuOpen(false); }}
+              onClick={() => { setActiveNav(item.label); setMobileMenuOpen(false); navigate(item.path); }}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium ${activeNav === item.label ? "bg-blue-50 text-blue-600" : "text-gray-600 hover:bg-gray-50"
                 }`}
             >
