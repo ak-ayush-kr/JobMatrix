@@ -1,21 +1,22 @@
-import { User } from "../models/user";
-import { cosineSimilarity } from "./cosineSimilarity";
-import { generateEmbedding } from "./generateEmbedding";
-import { getSkillsFromDescription } from "./getSkillFunction";
-import { sendJobEmail } from "./sendEmail";
+import { User } from "../models/user.js";
+import { cosineSimilarity } from "./cosineSimilarity.js";
+import { generateEmbedding } from "./generateEmbedding.js";
+import { getSkillsFromDescription } from "./getSkillFunction.js";
+import { sendJobEmail } from "./sendEmail.js";
 
-const matchedUser = ({jobembedding,users,threshold = 60}) => {
+const matchedUser = async({jobembedding,users,threshold}) => {
     const matchUser = [];
-    users.forEach((user)=>{
-        const userembedding = generateEmbedding(user?.profile?.skills);
-        if(!userembedding) return;
-
+    for(const user of users){
+        const userembedding = await generateEmbedding(user?.profile?.skills);
+        if(!userembedding?.length){
+            continue;
+        }
 
         const similarity = cosineSimilarity(jobembedding,userembedding);
         if(similarity > 0.6){
             matchUser.push({user});
         }
-    })
+    }
     return matchUser;
 }
 
@@ -23,15 +24,19 @@ const matchedUser = ({jobembedding,users,threshold = 60}) => {
 export const jobProcessing = async(job)=>{
     try {
         const skills = await getSkillsFromDescription(job.description);
+        console.log("skilling",skills);
         const jobembedding = await generateEmbedding(skills);
 
-        const user = await User.find({
+        const users = await User.find({
             role:"user",
         });
-
-        const matchuser = matchedUser({jobembedding,user,threshold=60});
+        const threshold = 0.6;
+        console.log("usering ",users.length);
+        const matchuser = await matchedUser({jobembedding,users,threshold});
+        console.log("user is ",matchuser);
 
         for(const item of matchuser){
+            console.log("emailing",item.user.email)
             await sendJobEmail({
                 to:item.user.email,
                 userName : item.user.name,

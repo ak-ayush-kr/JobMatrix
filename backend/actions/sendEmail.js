@@ -18,7 +18,7 @@ export const sendJobEmail = async ({to,userName,jobTitle,companyName,}) => {
         html: `
             <div>
                 <h2>Hello ${userName},</h2>
-                <p>A new job matching your skills has been posted on <b>JobKhojo</b>.</p>
+                <p>A new job matching your skills has been posted on <b>JobMatrix</b>.</p>
                 <div>
                     <h3>${jobTitle}</h3>
                     <p><b>Company:</b> ${companyName}</p>
@@ -27,7 +27,7 @@ export const sendJobEmail = async ({to,userName,jobTitle,companyName,}) => {
                 <p>Login to JobKhojo and apply now.</p>
                 <br/>
                 <p>Best Regards,</p>
-                <p><b>JobKhojo Team</b></p>
+                <p><b>JobMatrix Team</b></p>
             </div>
         `,
     };
