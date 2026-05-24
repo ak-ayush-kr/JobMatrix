@@ -68,7 +68,7 @@ function JobDetailsPage() {
   useEffect(() => {
     const getjobdetails = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/company/getJobById/${jobId}`,{
+        const res = await fetch(`http://localhost:5000/api/job/getJobById/${jobId}`,{
           method:"GET",
           credentials:"include",
         });

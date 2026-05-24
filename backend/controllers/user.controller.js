@@ -118,7 +118,7 @@ export const updateProfile = async (req, res) => {
         if (name) updateData['name'] = name;
         if (phoneNumber) updateData['profile.phoneNumber'] = phoneNumber;
         if (bio) updateData['profile.bio'] = bio;
-        if (skills) updateData['profile.skills'] = skills.split(',').map(s => s.trim());
+        if (skills) updateData['profile.skills'] = JSON.parse(skills);
 
         if (req.files?.profilePhoto) {
             const file = req.files.profilePhoto[0];

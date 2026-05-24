@@ -40,7 +40,7 @@ function UserDashboard() {
   useEffect(() => {
     const getalljobs = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/company/getAllJobs", {
+        const res = await fetch("http://localhost:5000/api/job/getAllJobs", {
           method: "GET",
           credentials:"include",
         });
