@@ -1,16 +1,21 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { setUser } from '../redux/authslice';
+import { useDispatch } from 'react-redux';
+
 import { Briefcase, Mail, Lock, Eye, EyeOff, User, Building2, CheckCircle2, ArrowRight, Loader2 } from 'lucide-react';
 
 function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  
   // function login user and recruiter
 
   const handleSubmit = async(e) => {
@@ -26,9 +31,16 @@ function Login() {
             body: JSON.stringify({ email, password, role }),
         });
         const data = await res.json();
-        console.log(data);
-        if(res.ok){
-            navigate("/");
+        // console.log(data.userDetails);
+        if (res.ok) {
+            dispatch(setUser(data.userDetails));
+
+            
+            if (data.userDetails.role === "recruiter") {
+                navigate("/recruiter/dashboard");
+            } else {
+                navigate("/userdashboard");
+            }
         }
     }catch (error) {
         console.error("Error logging in:", error);

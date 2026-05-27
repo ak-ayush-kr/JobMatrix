@@ -159,8 +159,8 @@ function homepage() {
 
                 <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     {FEATURES.map((f) => (
-                    <div key={f.title} className={`feature-card ${f.bg} rounded-2xl p-6 border border-transparent hover:border-blue-100 transition-all duration-300 cursor-pointer hover:translate-y-[-2px] ${f.hcolor} hover:shadow-lg`}>
-                        <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${f.color} text-white flex items-center justify-center mb-4 shadow-md`}>
+                    <div key={f.title} className={`feature-card ${f.bg} rounded-2xl p-6 border border-transparent hover:border-blue-100 transition-all duration-300 cursor-pointer hover:-translate-y-2 ${f.hcolor} hover:shadow-lg`}>
+                        <div className={`w-12 h-12 rounded-xl bg-linear-to-br ${f.color} text-white flex items-center justify-center mb-4 shadow-md`}>
                             {f.icon}
                         </div>
                         <h3 className="font-bold text-gray-900 text-lg mb-2">{f.title}</h3>
@@ -172,7 +172,7 @@ function homepage() {
         </section>
 
       {/* ── HOW IT WORKS ── */}
-        <section className="py-20 px-5 sm:px-8 bg-gradient-to-b from-blue-50/50 to-white">
+        <section className="py-20 px-5 sm:px-8 bg-linear-to-b from-blue-50/50 to-white">
             <div className="max-w-5xl mx-auto">
                 <div className="text-center mb-16">
                     <p className="text-blue-600 font-bold text-sm uppercase tracking-widest mb-3">Process</p>

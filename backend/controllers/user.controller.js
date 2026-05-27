@@ -5,11 +5,12 @@ import jwt from 'jsonwebtoken';
 
 export const register = async (req, res) => {
     try {
-        const{name, email, password, phoneNumber, role } = req.body;
+        const { name, email, password, phoneNumber, role } = req.body;
 
-        if(!name || !email || !password || !phoneNumber || !role) {
+        if (!name || !email || !password || !phoneNumber || !role) {
             return res.status(400).json({ message: 'All fields are required' });
         }
+
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: 'User already exists' });
@@ -35,8 +36,8 @@ export const register = async (req, res) => {
             password: hashedPassword,
             phoneNumber,
             role,
-            profile:profileData,
-        }); 
+            profile: profileData,
+        });
 
         const saveduser = await user.save();
         saveduser.password = undefined;
@@ -46,7 +47,7 @@ export const register = async (req, res) => {
             user: saveduser
         });
 
-    }catch (error) {
+    } catch (error) {
         console.error('Error in user registration:', error);
         res.status(500).json({ message: 'Server error' });
     }
@@ -55,8 +56,8 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
     try {
-        const {email, password,role} = req.body;
-        if(!email || !password || !role) {
+        const { email, password, role } = req.body;
+        if (!email || !password || !role) {
             return res.status(400).json({ message: 'All fields are required' });
         }
 
@@ -66,11 +67,16 @@ export const login = async (req, res) => {
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
-        if(!isMatch) {
+        if (!isMatch) {
             return res.status(400).json({ message: 'wrong password' });
         }
-        
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+        const payload = {
+            email: user.email,
+            id: user._id,
+            role: user.role
+        }
+        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' });
+        user = user.toObject();
         user.token = token;
         user.password = undefined;
 
@@ -79,11 +85,11 @@ export const login = async (req, res) => {
             sameSite: "lax",
             pqth: "/",
             secure: false,
-            domain: "localhost"
+            domain: "localhost",
+            httpOnly: true
         };
-        console.log(token);
 
-        user = {
+        let userDetails = {
             _id: user._id,
             name: user.name,
             email: user.email,
@@ -92,12 +98,64 @@ export const login = async (req, res) => {
             profile: user.profile
         }
 
-        return res.status(200).cookie("token", user.token, options).json({
+        return res.status(200).cookie("token", token, options).json({
             message: 'Login successful',
-            user,
-        }); 
+            userDetails,
+        });
     } catch (error) {
         console.error('Error in user login:', error);
         res.status(500).json({ message: 'Server error' });
     }
 };
+
+
+export const updateProfile = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const { name, phoneNumber, bio, skills } = req.body;
+
+        let updateData = {}
+        if (name) updateData['name'] = name;
+        if (phoneNumber) updateData['profile.phoneNumber'] = phoneNumber;
+        if (bio) updateData['profile.bio'] = bio;
+        if (skills) updateData['profile.skills'] = skills.split(',').map(s => s.trim());
+
+        if (req.files?.profilePhoto) {
+            const file = req.files.profilePhoto[0];
+
+            const b64 = Buffer.from(file.buffer).toString("base64");
+            const dataURI = `data:${file.mimetype};base64,${b64}`;
+
+            const uploadResult = await cloudinary.uploader.upload(dataURI, {
+                folder: "jobmatrix/profile",
+            });
+
+            updateData["profile.profilePhoto"] = uploadResult.secure_url;
+        }
+        if (req.files?.resume) {
+            const file = req.files.resume[0];
+            console.log("Uploading resume:");
+
+            const b64 = Buffer.from(file.buffer).toString("base64");
+            const dataURI = `data:${file.mimetype};base64,${b64}`;
+
+            const uploadResult = await cloudinary.uploader.upload(dataURI, {
+                folder: "jobmatrix/resume",
+                resource_type: "raw",
+            });
+
+            updateData["profile.resume"] = uploadResult.secure_url;
+            updateData["profile.resumeName"] = file.originalname;
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(userId, { $set: updateData }, { new: true }).select('-password');
+        return res.status(200).json({
+            message: 'Profile updated successfully',
+            user: updatedUser
+        });
+
+    } catch (error) {
+        console.log("Error in updating profile:", error);
+        res.status(500).json({ message: 'Server error' });
+    }
+}
