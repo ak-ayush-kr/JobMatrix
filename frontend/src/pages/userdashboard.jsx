@@ -25,12 +25,6 @@ function UserDashboard() {
     return () => clearTimeout(timer);
   }, []);
 
-  const filtered = alljob.filter(
-    (j) =>
-      j.title.toLowerCase().includes(search.toLowerCase()) ||
-      j.company.toLowerCase().includes(search.toLowerCase()) ||
-      j.location.toLowerCase().includes(search.toLowerCase())
-  );
 
 
 
@@ -63,6 +57,12 @@ function UserDashboard() {
     getalljobs();
   }, []);
 
+  const handleSearch = () => {
+    if (search.trim()) {
+      navigate(`/jobs?search=${encodeURIComponent(search.trim())}`);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#f0f4ff]" style={{ fontFamily: "'DM Sans', 'Segoe UI', sans-serif" }}>
       {/* NAVBAR */}
@@ -70,7 +70,7 @@ function UserDashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <div className="flex items-center gap-2 flex-shrink-0">
+            <div className="flex items-center gap-2 shrink-0">
               <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center shadow-sm">
                 <Briefcase size={14} className="text-white" />
               </div>
@@ -99,8 +99,10 @@ function UserDashboard() {
             {/* Right side */}
             <div className="flex items-center gap-3">
               <div className="hidden sm:flex items-center gap-2 bg-gray-50 rounded-xl px-3 py-1.5 cursor-pointer hover:bg-gray-100 transition-colors">
+                <button className="flex bg-none" onClick={()=> navigate("/profile")}>
                 <img src={user?.profilePhoto} alt="profile" className="w-7 h-7 rounded-full object-cover" />
                 <span className="text-sm font-medium text-gray-700">{user.name || "User"}</span>
+                </button>
               </div>
               <button className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium text-red-500 hover:bg-red-50 transition-all border border-transparent hover:border-red-100">
                 <span>↗</span>
@@ -131,7 +133,7 @@ function UserDashboard() {
       </nav>
 
       {/* HERO */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800">
+      <div className="relative overflow-hidden bg-linear-to-br from-blue-600 via-blue-700 to-indigo-800">
         <div className="hero-glow absolute inset-0" />
         <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)", backgroundSize: "32px 32px" }} />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
@@ -151,7 +153,7 @@ function UserDashboard() {
               {/* Search */}
               <div className="flex gap-2 max-w-xl">
                 <div className="flex-1 flex items-center gap-3 bg-white rounded-2xl px-4 py-3 shadow-xl">
-                  <span className="text-gray-400 text-lg flex-shrink-0">🔍</span>
+                  <span className="text-gray-400 text-lg shrink-0">🔍</span>
                   <input
                     type="text"
                     value={search}
@@ -160,10 +162,11 @@ function UserDashboard() {
                     className="flex-1 text-gray-800 placeholder-gray-400 text-sm font-medium outline-none bg-transparent search-glow"
                   />
                   {search && (
-                    <button onClick={() => setSearch("")} className="text-gray-400 hover:text-gray-600 flex-shrink-0">✕</button>
+                    <button onClick={() => setSearch("")} className="text-gray-400 hover:text-gray-600 shrink-0">✕</button>
                   )}
                 </div>
-                <button className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white px-5 py-3 rounded-2xl font-semibold text-sm border border-white/20 transition-all whitespace-nowrap">
+                <button className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white px-5 py-3 rounded-2xl font-semibold text-sm border border-white/20 transition-all whitespace-nowrap"
+                  onClick={handleSearch}>
                   Search
                 </button>
               </div>
@@ -178,24 +181,22 @@ function UserDashboard() {
         <div className="flex items-center justify-between mb-6">
           <div>
             <h2 className="text-xl font-bold text-gray-900" style={{ fontFamily: "'Sora', sans-serif" }}>
-              {search ? `Results for "${search}"` : "Latest Openings"}
+              { "Latest Openings" }
             </h2>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           {loading
-            ? Array.from({ length: 6 })
-            : filtered.length === 0
+            ? null
+            : alljob.length === 0
               ? (
                 <div className="col-span-full flex flex-col items-center justify-center py-20 text-center">
-                  <div className="text-5xl mb-4">🔎</div>
                   <h3 className="text-lg font-semibold text-gray-700 mb-1">No jobs found</h3>
-                  <p className="text-gray-400 text-sm">Currently no jobs exist for your search criteria.</p>
-                  <button onClick={() => setSearch("")} className="mt-4 text-blue-600 text-sm font-medium hover:underline">Clear search</button>
+                  <p className="text-gray-400 text-sm">Currently no jobs exist ..</p>
                 </div>
               )
-              : filtered.slice(0, 6).map((alljob, i) => (
+              : alljob.slice(0, 6).map((alljob, i) => (
                 <div
                   key={alljob._id}
                   className="card-hover bg-white rounded-3xl border border-gray-100 shadow-sm cursor-pointer fade-in relative overflow-hidden flex flex-col"
@@ -208,7 +209,7 @@ function UserDashboard() {
                     {/* Header row */}
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex items-center gap-3">
-                        <div className={`w-14 h-14 rounded-2xl bg-blue-500 flex items-center justify-center text-white font-bold text-2xl flex-shrink-0 shadow-md`}
+                        <div className={`w-14 h-14 rounded-2xl bg-blue-500 flex items-center justify-center text-white font-bold text-2xl shrink-0 shadow-md`}
                           style={{ fontFamily: "'Sora', sans-serif" }}>
                           {alljob.company.name.charAt(0)}
                         </div>

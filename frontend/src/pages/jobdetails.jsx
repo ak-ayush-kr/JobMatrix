@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { use, useState,useEffect } from "react";
 import {MapPin, DollarSign, Briefcase, Clock, Users, Building2,CalendarDays, CheckCircle2, ChevronRight, Star, Zap,TrendingUp, Award, 
 ExternalLink, BookOpen, Globe} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/navbar";
+import { useParams } from "react-router-dom";
 
 
 const jobData = {
@@ -50,6 +51,36 @@ function JobDetailsPage() {
   const [applied, setApplied] = useState(jobData.alreadyApplied);
   const [saved, setSaved] = useState(false);
   const job = jobData;
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
+  const userId = user._id;
+  const hasapplied = job.applications.some(
+    (app)=>app.applicant === userId
+  );
+
+  const {jobId} = useParams();
+  console.log("Job ID from URL:", jobId);
+  const [jobs, setJobs] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const getjobdetails = async () => {
+      try {
+        const res = await fetch(`http://localhost:5000/api/company/getJobById/${jobId}`,{
+          method:"GET",
+          credentials:"include",
+        });
+        const data = await res.json();
+        if(res.ok) {
+          console.log(data.job);
+          setJobs(data.job);
+        }
+      } catch (error) {
+        console.log("error fetching job details:", error);
+      }
+    };
+    getjobdetails();
+  }, [jobId]);
+
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans">
@@ -62,7 +93,7 @@ function JobDetailsPage() {
           {/* Job Header Card */}
           <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 hover:shadow-md transition-shadow duration-300">
             <div className="flex items-start gap-4">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-xl shadow-md flex-shrink-0">
+              <div className="w-16 h-16 rounded-2xl bg-linear-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-xl shadow-md shrink-0">
                 {job.companyInitials}
               </div>
 
@@ -70,9 +101,9 @@ function JobDetailsPage() {
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between gap-3 flex-wrap">
                   <div>
-                    <h1 className="text-2xl font-bold text-slate-800 leading-tight">{job.title}</h1>
+                    <h1 className="text-2xl font-bold text-slate-800 leading-tight">{jobs.title}</h1>
                     <div className="flex items-center gap-2 mt-1">
-                      <span className="text-blue-600 font-semibold text-base">{job.company}</span>
+                      <span className="text-blue-600 font-semibold text-base">{jobs?.company?.name || "company"}</span>
                     </div>
                   </div>
                   {/* Apply Button (desktop top-right) */}
@@ -98,13 +129,10 @@ function JobDetailsPage() {
                 {/* Tags Row */}
                 <div className="flex flex-wrap gap-2 mt-3">
                   <span className="inline-flex items-center gap-1.5 bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full border border-blue-100">
-                    <Briefcase size={11} /> {job.jobType}
+                    <Briefcase size={11} /> {jobs.jobType}
                   </span>
                   <span className="inline-flex items-center gap-1.5 bg-violet-50 text-violet-700 text-xs font-semibold px-3 py-1 rounded-full border border-violet-100">
-                    <Award size={11} /> {job.experience} exp
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 bg-orange-50 text-orange-700 text-xs font-semibold px-3 py-1 rounded-full border border-orange-100">
-                    <BookOpen size={11} /> {job.jobCategory}
+                    <Award size={11} /> {jobs.experienceLevel} exp
                   </span>
                 </div>
               </div>
@@ -113,30 +141,30 @@ function JobDetailsPage() {
             {/* Info Row */}
             <div className="mt-5 pt-5 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="flex items-center gap-2.5 text-slate-600">
-                <div className="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center shrink-0">
                   <MapPin size={15} className="text-slate-500" />
                 </div>
                 <div>
                   <p className="text-xs text-slate-400 font-medium">Location</p>
-                  <p className="text-sm font-semibold text-slate-700">{job.location}</p>
+                  <p className="text-sm font-semibold text-slate-700">{jobs.location}</p>
                 </div>
               </div>
               <div className="flex items-center gap-2.5 text-slate-600">
-                <div className="w-8 h-8 bg-green-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="w-8 h-8 bg-green-50 rounded-lg flex items-center justify-center shrink-0">
                   <DollarSign size={15} className="text-green-600" />
                 </div>
                 <div>
                   <p className="text-xs text-slate-400 font-medium">Salary</p>
-                  <p className="text-sm font-semibold text-slate-700">{job.salary}<span className="text-slate-400 font-normal text-xs">{job.salaryPeriod}</span></p>
+                  <p className="text-sm font-semibold text-slate-700">{jobs.salary}<span className="text-slate-400 font-normal text-xs">{job.salaryPeriod}</span></p>
                 </div>
               </div>
               <div className="flex items-center gap-2.5 text-slate-600">
-                <div className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center shrink-0">
                   <Clock size={15} className="text-blue-600" />
                 </div>
                 <div>
                   <p className="text-xs text-slate-400 font-medium">Experience</p>
-                  <p className="text-sm font-semibold text-slate-700">{job.experience}</p>
+                  <p className="text-sm font-semibold text-slate-700">{jobs.experienceLevel}</p>
                 </div>
               </div>
             </div>
@@ -170,22 +198,22 @@ function JobDetailsPage() {
                 icon: <Users size={20} className="text-blue-600" />,
                 bg: "bg-blue-50",
                 label: "Applicants",
-                value: `${job.applications.length}`,
+                value: `${jobs?.applications?.length}`,
                 sub: "people applied",
               },
               {
                 icon: <TrendingUp size={20} className="text-emerald-600" />,
                 bg: "bg-emerald-50",
                 label: "Open Positions",
-                value: job.openPositions,
+                value: jobs.position,
                 sub: "vacancies",
               },
               {
                 icon: <CalendarDays size={20} className="text-violet-600" />,
                 bg: "bg-violet-50",
                 label: "Posted",
-                value: daysAgo(job.postedDate),
-                sub: formatDate(job.postedDate),
+                value: daysAgo(jobs.createdAt),
+                sub: formatDate(jobs.createdAt),
               },
             ].map((stat, i) => (
               <div
@@ -208,7 +236,7 @@ function JobDetailsPage() {
               <div className="w-1 h-5 bg-blue-600 rounded-full"></div>
               <h2 className="text-lg font-bold text-slate-800">Job Description</h2>
             </div>
-            <p className="text-slate-600 leading-relaxed text-sm">{job.description}</p>
+            <p className="text-slate-600 leading-relaxed text-sm">{jobs.description}</p>
           </div>
 
           {/* Requirements */}
@@ -218,9 +246,9 @@ function JobDetailsPage() {
               <h2 className="text-lg font-bold text-slate-800">Requirements</h2>
             </div>
             <ul className="space-y-3">
-              {job.requirements.map((req, i) => (
+              {jobs?.requirements?.map((req, i) => (
                 <li key={i} className="flex items-start gap-3 group">
-                  <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center mt-0.5 flex-shrink-0 group-hover:bg-blue-600 transition-colors duration-200">
+                  <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center mt-0.5 shrink-0 group-hover:bg-blue-600 transition-colors duration-200">
                     <CheckCircle2 size={12} className="text-blue-600 group-hover:text-white transition-colors duration-200" />
                   </div>
                   <span className="text-sm text-slate-600 leading-relaxed">{req}</span>
@@ -234,7 +262,7 @@ function JobDetailsPage() {
         <div className="flex flex-col gap-6 mt-5">
 
           {/* Apply CTA Card */}
-          <div className="bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl p-6 text-white shadow-lg ">
+          <div className="bg-linear-to-br from-blue-500 to-blue-700 rounded-2xl p-6 text-white shadow-lg ">
             <div className="flex flex-col items-center justify-center">
               <h3 className="font-bold text-lg mb-1">Ready to apply?</h3>
               <p className="text-blue-100 text-sm mb-4">
@@ -264,14 +292,14 @@ function JobDetailsPage() {
               <h2 className="text-base font-bold text-slate-800">About the Company</h2>
             </div>
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+              <div className="w-12 h-12 rounded-xl bg-linear-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-lg shrink-0">
                 {job.companyInitials}
               </div>
               <div>
-                <p className="font-bold text-slate-800">{job.company}</p>
+                <p className="font-bold text-slate-800">{jobs?.company?.name || "company"}</p>
               </div>
             </div>
-            <p className="text-slate-500 text-sm leading-relaxed">{job.companyDescription}</p>
+            <p className="text-slate-500 text-sm leading-relaxed">{jobs?.company?.description || "No company description available."}</p>
             <button className="mt-4 flex items-center gap-1.5 text-blue-600 text-sm font-semibold hover:text-blue-700 transition-colors">
               <Globe size={14} /> View Company Profile <ExternalLink size={12} />
             </button>
