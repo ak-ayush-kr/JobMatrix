@@ -41,7 +41,6 @@ export const jobProcessing = async(job)=>{
                 to:item.user.email,
                 userName : item.user.name,
                 jobTitle : job.title,
-                company: "nalli company",
             });
         }
         console.log("get matching user");
