@@ -33,6 +33,10 @@ const RecruiterDashboard = () => {
           </button>
         </div>
       </div>
+      <div>
+         this is random text just for testing purpose
+          ------------zaaaafar--------------
+      </div>
     </div>
   );
 };
