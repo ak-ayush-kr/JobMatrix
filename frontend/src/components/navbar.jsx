@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Briefcase } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useDispatch } from 'react-redux';
 
 
 const Navbar = (props) => {
@@ -10,13 +11,30 @@ const Navbar = (props) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const { user, isAuthenticated } = useSelector((state) => state.auth);
- 
+  const dispatch = useDispatch();
+
   console.log("photo is");
+  const handleLogout = async () => {
+    console.log("logout function called");
+    const result = await fetch("http://localhost:5000/api/users/logout", {
+      method: "GET",
+      credentials: "include",
+    });
+
+    if (result.ok) {
+      console.log("logging out");
+      dispatch(logoutUser());
+      navigate("/");
+    }
+    else {
+      console.log("logout error", result);
+    }
+  }
 
   const navItems = [
-    { label: "Home", icon: "⊞" ,path:"/userdashboard"},
-    { label: "My Jobs", icon: "📁" ,path:"/myjobs"},
-    { label: "All Jobs", icon: "🔍", path:"/alljobs" },
+    { label: "Home", icon: "⊞", path: "/userdashboard" },
+    { label: "My Jobs", icon: "📁", path: "/myjobs" },
+    { label: "All Jobs", icon: "🔍", path: "/alljobs" },
   ];
 
   return (
@@ -52,13 +70,13 @@ const Navbar = (props) => {
 
           {/* Right side */}
           <div className="flex items-center gap-3">
-            <button onClick={()=>{navigate("/profile")}}>
-            <div className="hidden sm:flex items-center gap-2 bg-gray-50 rounded-xl px-3 py-1.5 cursor-pointer hover:bg-gray-100 transition-colors">
-              <img src={user.profile?.profilePhoto} alt="profile" className="w-7 h-7 rounded-full object-cover" />
-              <span className="text-sm font-medium text-gray-700">{user.name || "User"}</span>
-            </div>
+            <button onClick={() => { navigate("/profile") }}>
+              <div className="hidden sm:flex items-center gap-2 bg-gray-50 rounded-xl px-3 py-1.5 cursor-pointer hover:bg-gray-100 transition-colors">
+                <img src={user.profile?.profilePhoto} alt="profile" className="w-7 h-7 rounded-full object-cover" />
+                <span className="text-sm font-medium text-gray-700">{user.name || "User"}</span>
+              </div>
             </button>
-            <button className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium text-red-500 hover:bg-red-50 transition-all border border-transparent hover:border-red-100">
+            <button onClick={handleLogout} className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium text-red-500 hover:bg-red-50 transition-all border border-transparent hover:border-red-100">
               <span>↗</span>
               <span className="hidden sm:block">Logout</span>
             </button>

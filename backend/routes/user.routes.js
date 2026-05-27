@@ -1,5 +1,5 @@
 import express from 'express';
-import { register,login } from '../controllers/user.controller.js';
+import { register,login, logout } from '../controllers/user.controller.js';
 import { upload } from '../middleware/multer.js';
 import { updateProfile } from '../controllers/user.controller.js';
 import getUser from '../middleware/auth.js';
@@ -12,5 +12,7 @@ router.post("/updateProfile",getUser,upload.fields([
     { name: 'resume', maxCount: 1 }]),
     updateProfile
 );
+
+router.get("/logout",logout);
 
 export default router;
