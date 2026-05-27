@@ -34,7 +34,7 @@ const Myjobs = () => {
   useEffect(() => {
     try {
       const getAppliedJobs = async () => {
-        const res = await fetch("http://localhost:5000/api/company/getAppliedjobs", {
+        const res = await fetch("http://localhost:5000/api/job/getAppliedJobs", {
           method: "GET",
           credentials: "include",
         });
@@ -64,12 +64,12 @@ const Myjobs = () => {
           </div>
         ) : (
           <div className='max-w-6xl mx-auto px-4 py-8'>
-            {alljobs.map((job) => (
+            {jobs.map((job) => (
               <div key={job._id} className='bg-gray-100 p-6 rounded-lg shadow-md mb-4 border-l-6'>
                 <div className='flex items-center justify-between space-x-4 mb-4'>
                   <div className='flex items-center justify-center'>
                     <div className='rounded-full p-3 px-5 bg-blue-500 text-white font-bold text-lg mr-3'>
-                      C
+                      {job?.company?.name?.charAt(0).toUpperCase()}
                     </div>
                     <h3 className='text-xl font-bold text-gray-800'>{job.title}</h3>
                   </div>
@@ -80,13 +80,12 @@ const Myjobs = () => {
                   </div>
                 </div>
                 <div className='ml-3'>
-                  <p className='text-gray-800 text-sm lg:text-md flex'> 🏛️Company: {job.company}</p>
+                  <p className='text-gray-800 text-sm lg:text-md flex'> 🏛️Company: {job?.company?.name}</p>
                   <p className='text-gray-800 text-sm lg:text-md'>💰Salary: {job.salary}</p>
                   <p className='text-gray-800 text-sm lg:text-md'>📍Location: {job.location}</p>
-                  <p className='text-gray-800 text-sm lg:text-md'>Status: <span className={`font-bold ${statusColors[job.status] || "text-gray-500"}`}>
-                    {job.status}
+                  <p className='text-gray-800 text-sm lg:text-md'>Status: <span className={`font-bold ${statusColors[job.applicationStatus] || "text-gray-500"}`}>
+                    {job.applicationStatus}
                   </span></p>
-                  <p className='text-gray-800 text-sm lg:text-md mt-2'>{job.description}</p>
                 </div>
               </div>
             ))}

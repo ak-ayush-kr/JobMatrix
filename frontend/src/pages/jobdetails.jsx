@@ -8,37 +8,6 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 
-const jobData = {
-  title: "Head Chef",
-  company: "Tomato-Potato",
-  companyInitials: "TP",
-  location: "Mars Colony, Red District",
-  salary: "₹1,50,000",
-  salaryPeriod: "/ month",
-  experience: "5 Years",
-  jobType: "Full-time",
-  jobCategory: "Cook",
-  postedDate: "2025-03-10",
-  openPositions: 3,
-  applications: Array(47).fill(null),
-  alreadyApplied: false,
-  rating: 4.5,
-  companyDescription:
-    "Tomato-Potato is a pioneering intergalactic food chain bringing the best of Earth's culinary traditions to the outer planets. With 200+ locations across the solar system, we are committed to exceptional food quality, innovation, and a stellar dining experience. Our culture is built on passion, creativity, and the relentless pursuit of the perfect dish.",
-  description:
-    "We are seeking an exceptional Head Chef to lead our culinary operations at our flagship Mars Colony location. You will oversee a dynamic team of 15 kitchen staff, drive menu innovation, and uphold the highest standards of food quality. This is a rare opportunity to shape the future of interplanetary cuisine and create dishes enjoyed across the solar system. You'll collaborate directly with our executive team to develop seasonal menus, manage kitchen operations, and mentor the next generation of stellar cooks.",
-  requirements: [
-    "Minimum 5 years of experience as a Head Chef or Executive Chef",
-    "Expertise in multi-cuisine cooking techniques (Earth & beyond)",
-    "Strong leadership and team management skills",
-    "Ability to work under high pressure in a fast-paced environment",
-    "Proficiency in inventory management and food cost control",
-    "Culinary degree from a recognized institute preferred",
-    "Experience with low-gravity cooking equipment is a plus",
-    "Excellent communication and organizational skills",
-  ],
-};
-
 const formatDate = (dateStr) => {
   const date = new Date(dateStr);
   return date.toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" });
@@ -50,18 +19,30 @@ const daysAgo = (dateStr) => {
 };
 
 function JobDetailsPage() {
-  const [applied, setApplied] = useState(jobData.alreadyApplied);
-  const [saved, setSaved] = useState(false);
+  const [applied, setApplied] = useState(false);
   const [jobs, setJobs] = useState([]);
-  const job = jobData;
   const { user, isAuthenticated } = useSelector((state) => state.auth);
   const userId = user._id;
-  const hasapplied = jobs?.applications?.some(
-    (app)=>app?.applicant === userId
-  );
+  
 
   const {jobId} = useParams();
   console.log("Job ID from URL:", jobId);
+
+  const applyJobs = async() =>{
+    try {
+      console.log("jobid ",jobId);
+      const res = await fetch(`http://localhost:5000/api/application/apply/${jobId}`,{
+        method:"POST",
+        credentials:"include",
+      });
+      if(res.ok){
+        setApplied(true);
+        console.log("applied succesfully");
+      }
+    } catch (error) {
+      console.log("error while applying for job ",error);
+    }
+  }
 
 
 
@@ -82,7 +63,13 @@ function JobDetailsPage() {
       }
     };
     getjobdetails();
-  }, [jobId]);
+  }, [jobId,userId]);
+
+  useEffect(()=>{
+    const hasapplied = jobs?.applications?.some( (app) => app?.applicant?._id?.toString() === userId?.toString());
+    console.log("has applied", hasapplied);
+    setApplied(hasapplied);
+  },[jobs,userId]);
 
 
   return (
@@ -112,7 +99,7 @@ function JobDetailsPage() {
                   {/* Apply Button (desktop top-right) */}
                   <div className="hidden sm:flex flex-col items-end gap-2">
                     <button
-                      onClick={() => !applied && setApplied(true)}
+                      onClick={applyJobs}
                       disabled={applied}
                       className={`px-6 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 shadow-sm ${
                         applied
@@ -158,7 +145,7 @@ function JobDetailsPage() {
                 </div>
                 <div>
                   <p className="text-xs text-slate-400 font-medium">Salary</p>
-                  <p className="text-sm font-semibold text-slate-700">{jobs.salary}<span className="text-slate-400 font-normal text-xs">{job.salaryPeriod}</span></p>
+                  <p className="text-sm font-semibold text-slate-700">{jobs.salary}<span className="text-slate-400 font-normal text-xs"></span></p>
                 </div>
               </div>
               <div className="flex items-center gap-2.5 text-slate-600">
@@ -167,7 +154,7 @@ function JobDetailsPage() {
                 </div>
                 <div>
                   <p className="text-xs text-slate-400 font-medium">Experience</p>
-                  <p className="text-sm font-semibold text-slate-700">{jobs.experienceLevel}</p>
+                  <p className="text-sm font-semibold text-slate-700">{jobs.experienceLevel} years</p>
                 </div>
               </div>
             </div>
@@ -175,7 +162,7 @@ function JobDetailsPage() {
             {/* Mobile Apply Button */}
             <div className="sm:hidden mt-4 flex gap-3">
               <button
-                onClick={() => !applied && setApplied(true)}
+                onClick={applyJobs}
                 disabled={applied}
                 className={`flex-1 py-3 rounded-xl font-semibold text-sm transition-all duration-200 ${
                   applied
@@ -184,12 +171,6 @@ function JobDetailsPage() {
                 }`}
               >
                 {applied ? "✓ Applied" : "Apply Now"}
-              </button>
-              <button
-                onClick={() => setSaved(!saved)}
-                className="px-4 py-3 rounded-xl border border-slate-200 text-slate-500 text-sm hover:border-blue-300 hover:text-blue-600 transition-colors"
-              >
-                {saved ? "★" : "☆"}
               </button>
             </div>
           </div>
@@ -269,7 +250,7 @@ function JobDetailsPage() {
             <div className="flex flex-col items-center justify-center">
               <h3 className="font-bold text-lg mb-1">Ready to apply?</h3>
               <p className="text-blue-100 text-sm mb-4">
-                {job.applications.length} others have already applied. Don't miss out!
+                {jobs?.applications?.length} others have already applied. Don't miss out!
               </p>
             </div>
             <button
@@ -296,7 +277,7 @@ function JobDetailsPage() {
             </div>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 rounded-xl bg-linear-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-lg shrink-0">
-                {job.companyInitials}
+                C
               </div>
               <div>
                 <p className="font-bold text-slate-800">{jobs?.company?.name || "company"}</p>

@@ -76,7 +76,12 @@ export const getAllJobs = async (req, res) => {
 export const getJobById = async (req, res) => {
     try {
         const jobId = req.params.id;
-        const job = await Job.findById(jobId).populate("applications").populate("company");
+        const job = await Job.findById(jobId).populate({
+            path: "applications",
+            populate: {
+                path: "applicant",
+            }
+        }).populate("company");;
 
         if (!job) {
             return res.status(404).json({
@@ -188,16 +193,20 @@ export const updateJob = async (req, res) => {
 export const getAppliedJobs = async (req, res) => {
     try {
         const userId = req.user.id;
-        const jobs = await Job.find({ "applications.applicant": userId })
-            .populate("company");
+        const applications = await Application.find({
+            applicant: userId
+        })
+            .populate({
+                path: "job",
+                populate: {
+                    path: "company"
+                }
+            });
 
-        const result = jobs.map(job => {
-            const application = job.applications.find(app => app.applicant.toString() === userId);
-            return {
-                ...job._doc,
-                applicationStatus: application ? application.status : "N/A"
-            }
-        });
+        const result = applications.map((app) => ({
+            ...app.job._doc,
+            applicationStatus: app.status
+        }));
         return res.status(200).json({ message: "Applied jobs fetched successfully", jobs: result });
     } catch (error) {
         console.log("error while fetching users jobs", error);
