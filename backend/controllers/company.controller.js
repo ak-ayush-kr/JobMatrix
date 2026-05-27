@@ -23,13 +23,13 @@ export const registerCompany=async(req,res)=>{
                 success:false
             });
         }
-        if(!req.id){
+        if(!req.user.id){
             console.log("user not found");
         }
         //create company
         let company=await Company.create({
             name:companyName,
-            userId:req.id
+            userId:req.user.id
         });
 
         return res.status(201).json({
@@ -52,7 +52,7 @@ export const registerCompany=async(req,res)=>{
 //get all company created by user/recruiter
 export const getCompany = async (req, res) => {
     try {
-        const userId = req.id;
+        const userId = req.user.id;
         const companies = await Company.find({userId});
         if(!companies) {
             return res.status(404).json({
@@ -141,7 +141,7 @@ export const updateCompany = async (req, res) => {
         res.status(500).json({
             success:false,
             data:"Error while company detail updation",
-            message:e.message
+            message:error.message
         })
     }
 }

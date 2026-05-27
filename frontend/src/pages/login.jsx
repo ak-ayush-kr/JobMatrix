@@ -31,10 +31,16 @@ function Login() {
             body: JSON.stringify({ email, password, role }),
         });
         const data = await res.json();
-        console.log(data);
-        if(res.ok){
-            dispatch(setUser(data.user));
-            navigate("/userdashboard");
+        // console.log(data.userDetails);
+        if (res.ok) {
+            dispatch(setUser(data.userDetails));
+
+            
+            if (data.userDetails.role === "recruiter") {
+                navigate("/recruiter/dashboard");
+            } else {
+                navigate("/userdashboard");
+            }
         }
     }catch (error) {
         console.error("Error logging in:", error);
