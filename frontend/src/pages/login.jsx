@@ -32,9 +32,15 @@ function Login() {
         });
         const data = await res.json();
         // console.log(data.userDetails);
-        if(res.ok){
+        if (res.ok) {
             dispatch(setUser(data.userDetails));
-            navigate("/userdashboard");
+
+            
+            if (data.userDetails.role === "recruiter") {
+                navigate("/recruiter/dashboard");
+            } else {
+                navigate("/userdashboard");
+            }
         }
     }catch (error) {
         console.error("Error logging in:", error);

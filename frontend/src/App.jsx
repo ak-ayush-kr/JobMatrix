@@ -9,7 +9,11 @@ import Alljobs from './pages/alljobs.jsx';
 import Myjobs from './pages/myjobs.jsx';
 import Profile from './pages/profile.jsx';
 import Search from './pages/search.jsx';
-
+import RecruiterDashboard from "./pages/recruiter/RecruiterDashboard";
+import EnrollCompany from "./pages/recruiter/EnrollCompany";
+import CreateJob from "./pages/recruiter/CreateJob";
+import MyCompanies from "./pages/recruiter/MyCompanies";
+import MyJobsRecruiter from "./pages/recruiter/MyJobsRecruiter";
 function App() {
 
   return (
@@ -24,6 +28,11 @@ function App() {
         <Route path="/profile" element={<Profile/>} />
         <Route path="/myjobs" element={<Myjobs/>}/>
         <Route path="/jobs" element={<Search/>}/>
+        <Route path="/recruiter/dashboard" element={<RecruiterDashboard />} />
+        <Route path="/recruiter/enroll-company" element={<EnrollCompany />} />
+        <Route path="/recruiter/create-job" element={<CreateJob />} />
+        <Route path="/recruiter/my-companies" element={<MyCompanies />} />
+        <Route path="/recruiter/my-jobs" element={<MyJobsRecruiter />} />
       </Routes>
     </>
   );

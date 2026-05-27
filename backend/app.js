@@ -23,7 +23,7 @@ app.use(cors({
 
 app.use('/api/users',router);
 app.use('/api/company',companyRouter);
-app.use('/api/company',jobRouter);
+app.use('/api/job',jobRouter);
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {

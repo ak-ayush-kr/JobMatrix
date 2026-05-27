@@ -22,12 +22,12 @@ const getUser = async (req, res, next) => {
             })
         }
 
-        /*const user = await User.findById(decodedToken.id).select("-password");
+        const user = await User.findById(decodedToken.id).select("-password");
         if(!user){
             return res.status(401).json({ message: "User not found" });
         }
 
-        req.user = user;*/
+        req.user = user;
         next();
     } catch (error) {
         console.error("Error in getUser middleware:", error);
