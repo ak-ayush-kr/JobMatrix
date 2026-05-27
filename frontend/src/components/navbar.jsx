@@ -28,7 +28,7 @@ const Navbar = (props) => {
             <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center shadow-sm">
               <Briefcase size={14} className="text-white" />
             </div>
-            <span className="text-xl font-bold text-gray-900 tracking-tight" style={{ fontFamily: "'Sora', sans-serif" }}>
+            <span className="text-xl font-bold text-gray-900 tracking-tight">
               Job<span className="text-blue-600">Matrix</span>
             </span>
           </div>

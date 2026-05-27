@@ -18,7 +18,6 @@ function HeroIllustration() {
         className="relative w-full rounded-3xl shadow-2xl border border-blue-100 object-cover"
       />
 
-         {/* Floating notification cards */}
       <div className="absolute -top-4 -left-4 bg-white border border-blue-100 shadow-lg rounded-2xl px-3 py-2 flex items-center gap-2 text-sm font-medium text-gray-700">
         <span className="text-lg">🎉</span> New match found!
       </div>

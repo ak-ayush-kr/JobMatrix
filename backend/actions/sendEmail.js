@@ -8,7 +8,7 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-export const sendJobEmail = async ({to,userName,jobTitle,companyName,}) => {
+export const sendJobEmail = async ({to,userName,jobTitle}) => {
   try {
 
     const mailOptions = {
@@ -21,7 +21,6 @@ export const sendJobEmail = async ({to,userName,jobTitle,companyName,}) => {
                 <p>A new job matching your skills has been posted on <b>JobMatrix</b>.</p>
                 <div>
                     <h3>${jobTitle}</h3>
-                    <p><b>Company:</b> ${companyName}</p>
                 </div>
 
                 <p>Login to JobKhojo and apply now.</p>
