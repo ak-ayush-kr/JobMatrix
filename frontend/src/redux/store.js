@@ -1,6 +1,6 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import authReducer from "./authslice";
-import jobReducer from "./jobslice";
+import jobReducer from "./jobSlice";
 import recruiterJobReducer from "./recruiterJobSlice";
 import companyReducer from "./companySlice";
 

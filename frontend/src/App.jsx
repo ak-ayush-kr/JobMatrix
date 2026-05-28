@@ -17,6 +17,8 @@ import MyJobsRecruiter from "./pages/recruiter/MyJobsRecruiter";
 import UpdateCompany from "./pages/recruiter/UpdateCompany";
 import ProtectedRoute from "./components/admin/protectedroute.jsx";
 import RecruiterRoute from './components/admin/recruiterroute.jsx';
+import JobApplicants from "./pages/recruiter/JobApplicants";
+import ScheduleInterview from "./pages/recruiter/ScheduleInterview";
 function App() {
 
   return (
@@ -37,6 +39,15 @@ function App() {
         <Route path="/recruiter/my-companies" element={<RecruiterRoute><MyCompanies /></RecruiterRoute>} />
         <Route path="/recruiter/my-jobs" element={<RecruiterRoute><MyJobsRecruiter /></RecruiterRoute>} />
         <Route path="/update-company/:id" element={<RecruiterRoute><UpdateCompany /></RecruiterRoute>} />
+        <Route
+          path="/recruiter/job/:jobId"
+          element={<JobApplicants />}
+        />
+
+        <Route
+          path="/recruiter/schedule-interview/:applicationId"
+          element={<ScheduleInterview />}
+        />
       </Routes>
     </>
   );

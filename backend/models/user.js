@@ -23,6 +23,16 @@ const userSchema = new mongoose.Schema({
         enum: ['user', 'recruiter'],
         required: true,
     },
+    currentJob : {
+    type : mongoose.Schema.Types.ObjectId,
+    ref : "Job",
+    default : null
+    },
+
+    isEmployed : {
+        type : Boolean,
+        default : false
+    },
     profile: {
         bio:{type: String},
         skills: [{type: String}],

@@ -2,7 +2,7 @@ import { Job } from "../models/job.js";
 import { Application } from "../models/application.js";
 import { getSkillsFromDescription } from "../actions/getSkillFunction.js";
 import { jobProcessing } from "../actions/findMatchingUser.js";
-
+import { User } from "../models/user.js";
 export const postJob = async (req, res) => {
     try {
         const { title, description, requirements, salary, location, jobType, experience, position, companyId } = req.body;
@@ -48,7 +48,20 @@ export const postJob = async (req, res) => {
 
 export const getAllJobs = async (req, res) => {
     try {
+
+        const user = await User.findById(req.user.id);
+
+        // if user already employed
+        if(user?.isEmployed){
+
+            return res.status(200).json({
+                jobs : [],
+                success : true
+            });
+        }
+
         const keyword = req.query.keyword || "";
+
         const query = {
             $or: [
                 { title: { $regex: keyword, $options: "i" } },
@@ -56,7 +69,10 @@ export const getAllJobs = async (req, res) => {
             ],
         };
 
-        const jobs = await Job.find(query)
+        const jobs = await Job.find({
+            ...query,
+            isClosed : false
+        })
             .populate("company")
             .sort({ createdAt: -1 });
 
@@ -64,8 +80,11 @@ export const getAllJobs = async (req, res) => {
             jobs,
             success: true,
         });
+
     } catch (error) {
+
         console.error(error);
+
         return res.status(500).json({
             message: "Server error while fetching jobs.",
             success: false,
@@ -211,5 +230,99 @@ export const getAppliedJobs = async (req, res) => {
     } catch (error) {
         console.log("error while fetching users jobs", error);
         return res.status(500).json({ message: "server error while fetching applied jobs" });
+    }
+}
+
+export const getMyJob = async (req,res)=>{
+
+    try {
+
+        const userId = req.user.id;
+
+        const user = await User.findById(userId);
+
+        // user has no job
+        if(!user.currentJob){
+
+            return res.status(404).json({
+                message : "No active job",
+                success : false
+            });
+        }
+
+        const job = await Job.findById(user.currentJob)
+        .populate("company");
+
+        if(!job){
+
+            return res.status(404).json({
+                message : "Job not found",
+                success : false
+            });
+        }
+
+        return res.status(200).json({
+            job,
+            success : true
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+        return res.status(500).json({
+            message : "Server error",
+            success : false
+        });
+    }
+}
+export const deleteJob = async (req,res)=>{
+
+    try {
+
+        const jobId = req.params.id;
+
+        const job = await Job.findById(jobId);
+
+        if(!job){
+
+            return res.status(404).json({
+                message : "Job not found",
+                success : false
+            });
+        }
+
+        // security check
+        if(
+            job.created_by.toString()
+            !== req.user.id
+        ){
+            return res.status(403).json({
+                message : "Unauthorized",
+                success : false
+            });
+        }
+
+        // delete all related applications
+        await Application.deleteMany({
+            job : jobId
+        });
+
+        // delete job
+        await Job.findByIdAndDelete(jobId);
+
+        return res.status(200).json({
+            message : "Job deleted successfully",
+            success : true
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+        return res.status(500).json({
+            message : "Server error",
+            success : false
+        });
     }
 }

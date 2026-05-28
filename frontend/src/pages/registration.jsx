@@ -44,7 +44,9 @@ function Registration() {
                 navigate("/login");
             }
         } catch (error) {
-            console.error("Registration error:", error);
+        console.error("Registration error:", error);
+        } finally {
+        setLoading(false);
         }
     }
 
