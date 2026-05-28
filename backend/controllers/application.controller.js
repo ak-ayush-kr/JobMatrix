@@ -6,6 +6,7 @@ export const applyToJob = async (req, res) => {
     try {
         const { jobId } = req.params;
         const applicantId = req.user.id;
+        console.log("id" ,applicantId);
 
         if (!jobId) {
             return res.status(400).json({ message: "Job ID is required" });

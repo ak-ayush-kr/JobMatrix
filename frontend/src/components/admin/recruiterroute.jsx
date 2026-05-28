@@ -3,8 +3,8 @@ import { Navigate } from "react-router-dom";
 
 const RecruiterRoute = ({ children }) => {
   const { user } = useSelector((state) => state.auth);
-
-  if (user?.role !== "recruiter") {
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  if (user?.role !== "recruiter"  || !isAuthenticated) {
     return <Navigate to="/" />;
   }
 

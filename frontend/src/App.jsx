@@ -16,6 +16,7 @@ import MyCompanies from "./pages/recruiter/MyCompanies";
 import MyJobsRecruiter from "./pages/recruiter/MyJobsRecruiter";
 import UpdateCompany from "./pages/recruiter/UpdateCompany";
 import ProtectedRoute from "./components/admin/protectedroute.jsx";
+import RecruiterRoute from './components/admin/recruiterroute.jsx';
 function App() {
 
   return (
@@ -30,12 +31,12 @@ function App() {
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/myjobs" element={<ProtectedRoute><Myjobs /></ProtectedRoute>} />
         <Route path="/jobs" element={<ProtectedRoute><Search /></ProtectedRoute>} />
-        <Route path="/recruiter/dashboard" element={<ProtectedRoute><RecruiterDashboard /></ProtectedRoute>} />
-        <Route path="/recruiter/enroll-company" element={<ProtectedRoute><EnrollCompany /></ProtectedRoute>} />
-        <Route path="/recruiter/create-job" element={<ProtectedRoute><CreateJob /></ProtectedRoute>} />
-        <Route path="/recruiter/my-companies" element={<ProtectedRoute><MyCompanies /></ProtectedRoute>} />
-        <Route path="/recruiter/my-jobs" element={<ProtectedRoute><MyJobsRecruiter /></ProtectedRoute>} />
-        <Route path="/update-company/:id" element={<ProtectedRoute><UpdateCompany /></ProtectedRoute>} />
+        <Route path="/recruiter/dashboard" element={<RecruiterRoute><RecruiterDashboard /></RecruiterRoute>} />
+        <Route path="/recruiter/enroll-company" element={<RecruiterRoute><EnrollCompany /></RecruiterRoute>} />
+        <Route path="/recruiter/create-job" element={<RecruiterRoute><CreateJob /></RecruiterRoute>} />
+        <Route path="/recruiter/my-companies" element={<RecruiterRoute><MyCompanies /></RecruiterRoute>} />
+        <Route path="/recruiter/my-jobs" element={<RecruiterRoute><MyJobsRecruiter /></RecruiterRoute>} />
+        <Route path="/update-company/:id" element={<RecruiterRoute><UpdateCompany /></RecruiterRoute>} />
       </Routes>
     </>
   );

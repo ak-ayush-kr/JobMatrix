@@ -159,3 +159,19 @@ export const updateProfile = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 }
+
+export const logout = async(req,res)=>{
+    try {
+        return res.status(200).cookie("token","",{
+            maxAge:0,
+            httpOnly:true,
+            secure:false,
+            sameSite:"strict",
+        }).json({
+            message:"logged out successfully"
+        });   
+    }catch (error) {
+        console.log("error while logging out ",error);
+        res.status(500).json({message:"server error"});
+    }
+}
