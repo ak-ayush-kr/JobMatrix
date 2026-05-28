@@ -17,8 +17,8 @@ const Search = () => {
   useEffect(() => {
     if (search) {
       const filtered = job.filter((job) =>
-        job.title.toLowerCase().includes(search.toLowerCase()) ||
-        job.description.toLowerCase().includes(search.toLowerCase())
+        (job.title || "").toLowerCase().includes(search.toLowerCase()) ||
+        (job.description || "").toLowerCase().includes(search.toLowerCase())
       );
       setFilteredJobs(filtered);
     } else {

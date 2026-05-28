@@ -15,7 +15,7 @@ export const createJob = createAsyncThunk(
 );
 
 const recruiterJobSlice = createSlice({
-  name: "job",
+  name: "recruiterJobs",
   initialState: {
     jobs: [],
     loading: false,
