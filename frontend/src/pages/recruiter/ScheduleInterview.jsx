@@ -23,7 +23,7 @@ const ScheduleInterview = () => {
   const handleSubmit = async (e) => {
 
     e.preventDefault();
-
+    console.log("Sending Data => ", formData);
     try {
 
       await axiosInstance.put(
@@ -36,8 +36,18 @@ const ScheduleInterview = () => {
       navigate("/recruiter/my-companies");
 
     } catch (error) {
-      console.log(error);
-    }
+  console.log("FULL ERROR => ", error);
+
+  console.log(
+    "BACKEND RESPONSE => ",
+    error?.response?.data
+  );
+
+  alert(
+    error?.response?.data?.message ||
+    "Something went wrong"
+  );
+}
   };
 
   return (

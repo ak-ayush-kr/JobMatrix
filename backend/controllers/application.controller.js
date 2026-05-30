@@ -21,12 +21,7 @@ export const applyToJob = async (req, res) => {
             });
         }
         // already employed
-        if(user.isEmployed){
-            return res.status(400).json({
-                message : "You already have a job",
-                success : false
-            });
-        }
+     
 
         const existingApplication = await Application.findOne({
             job : jobId,
@@ -192,7 +187,7 @@ export const updateStatus = async (req, res) => {
 
             user.currentJob = application.job._id;
 
-            user.isEmployed = true;
+            
 
             await user.save();
 
@@ -272,7 +267,7 @@ export const scheduleInterview = async (req,res)=>{
 
         const applicationId = req.params.id;
 
-        if(!interviewDate || !interviewTime){
+        if(!interviewDate ){
             return res.status(400).json({
                 message : "Interview date required",
                 success : false

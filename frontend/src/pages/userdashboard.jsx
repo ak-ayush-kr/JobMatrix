@@ -84,6 +84,15 @@ function UserDashboard() {
 
               interviewDetails:
                 appliedJob?.interviewDetails || "",
+
+              interviewDate:
+                appliedJob?.interviewDate || "",
+
+              interviewTime:
+                appliedJob?.interviewTime || "",
+
+              interviewMode:
+                appliedJob?.interviewMode || "",
             };
           });
 
@@ -467,7 +476,7 @@ function UserDashboard() {
                       ? "bg-yellow-100 text-yellow-700"
                       : selectedJob.applicationStatus === "shortlisted"
                       ? "bg-blue-100 text-blue-700"
-                      : selectedJob.applicationStatus === "interview"
+                      : selectedJob.applicationStatus === "interview_scheduled"
                       ? "bg-purple-100 text-purple-700"
                       : selectedJob.applicationStatus === "accepted"
                       ? "bg-green-100 text-green-700"
