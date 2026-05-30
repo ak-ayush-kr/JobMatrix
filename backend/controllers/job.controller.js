@@ -49,16 +49,7 @@ export const postJob = async (req, res) => {
 export const getAllJobs = async (req, res) => {
     try {
 
-        const user = await User.findById(req.user.id);
-
-        // if user already employed
-        if(user?.isEmployed){
-
-            return res.status(200).json({
-                jobs : [],
-                success : true
-            });
-        }
+     
 
         const keyword = req.query.keyword || "";
 
@@ -223,9 +214,27 @@ export const getAppliedJobs = async (req, res) => {
             });
 
         const result = applications.map((app) => ({
-            ...app.job._doc,
-            applicationStatus: app.status
-        }));
+
+    ...app.job._doc,
+
+    applicationStatus: app.status,
+
+    recruiterMessage: app.recruiterMessage,
+
+    interviewDate: app.interviewDate,
+
+    interviewTime: app.interviewTime,
+
+    interviewMode: app.interviewMode,
+
+    interviewDetails:
+        app.interviewDate
+            ? `Date: ${app.interviewDate}
+Time: ${app.interviewTime || "Not specified"}
+Mode: ${app.interviewMode || "Not specified"}`
+            : ""
+
+}));
         return res.status(200).json({ message: "Applied jobs fetched successfully", jobs: result });
     } catch (error) {
         console.log("error while fetching users jobs", error);
