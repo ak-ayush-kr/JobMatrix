@@ -63,9 +63,7 @@ function UserDashboard() {
         const appliedData = await appliedRes.json();
 
         if (jobsRes.ok) {
-
           const appliedJobs = appliedData.jobs || [];
-
           const updatedJobs = jobsData.jobs.map((job) => {
 
             const appliedJob = appliedJobs.find(

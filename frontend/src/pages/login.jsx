@@ -5,6 +5,7 @@ import { setUser } from '../redux/authslice';
 import { useDispatch } from 'react-redux';
 
 import { Briefcase, Mail, Lock, Eye, EyeOff, User, Building2, CheckCircle2, ArrowRight, Loader2 } from 'lucide-react';
+import { connectSocket } from '../utils/socket.js';
 
 function Login() {
   const navigate = useNavigate();
@@ -31,10 +32,10 @@ function Login() {
             body: JSON.stringify({ email, password, role }),
         });
         const data = await res.json();
-        // console.log(data.userDetails);
+        console.log(data);
         if (res.ok) {
             dispatch(setUser(data.userDetails));
-
+            connectSocket(data.userDetails._id);
             
             if (data.userDetails.role === "recruiter") {
                 navigate("/recruiter/dashboard");

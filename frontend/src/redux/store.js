@@ -6,7 +6,7 @@ import companyReducer from "./companySlice";
 
 import { persistReducer, persistStore } from "redux-persist";
 
-// custom localStorage (since you're using promises)
+// custom localStorage 
 const storage = {
   getItem: (key) => Promise.resolve(localStorage.getItem(key)),
   setItem: (key, value) => Promise.resolve(localStorage.setItem(key, value)),
@@ -16,7 +16,7 @@ const storage = {
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  job: jobReducer, // employee
+  job: jobReducer,
   recruiterJobs: recruiterJobReducer, // recruiter
   company: companyReducer,
 });
@@ -28,10 +28,10 @@ const persistConfig = {
   version: 1,
 };
 
-// wrap reducer
+
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-// ✅ single store only
+//  single store only
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
@@ -40,5 +40,5 @@ export const store = configureStore({
     }),
 });
 
-// ✅ export persistor
+//  export persistor
 export const persistor = persistStore(store);

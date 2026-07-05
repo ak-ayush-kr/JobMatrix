@@ -7,6 +7,8 @@ import router from './routes/user.routes.js';
 import companyRouter from './routes/company.route.js';
 import jobRouter from './routes/job.route.js';
 import applicationRouter from './routes/application.route.js';
+import {initializeSocket} from "./utils/socket.js"
+import http from 'http';
 const app = express();
 dotenv.config({
     path: "./.env"
@@ -28,7 +30,10 @@ app.use('/api/job',jobRouter);
 app.use('/api/application',applicationRouter);
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-    connectDB();
+const server = http.createServer(app);
+initializeSocket(server);
+connectDB();
+
+server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

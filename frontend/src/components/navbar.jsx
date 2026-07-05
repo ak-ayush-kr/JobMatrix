@@ -83,6 +83,9 @@ const Navbar = (props) => {
             <button className="md:hidden p-2 rounded-lg hover:bg-gray-100" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
               <span className="text-gray-600 text-lg">☰</span>
             </button>
+            <button onClick={() => { navigate("/notifications") }} className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 transition-all border border-transparent hover:border-gray-100">
+              <span className="text-gray-600 text-lg">notice</span>
+            </button>
           </div>
         </div>
       </div>

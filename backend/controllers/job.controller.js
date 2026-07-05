@@ -3,6 +3,9 @@ import { Application } from "../models/application.js";
 import { getSkillsFromDescription } from "../actions/getSkillFunction.js";
 import { jobProcessing } from "../actions/findMatchingUser.js";
 import { User } from "../models/user.js";
+import { Noticification } from "../models/noticification.js";
+import { io, getReceiverSocketId } from "../utils/socket.js";
+
 export const postJob = async (req, res) => {
     try {
         const { title, description, requirements, salary, location, jobType, experience, position, companyId } = req.body;
@@ -30,8 +33,19 @@ export const postJob = async (req, res) => {
 
         console.log("working here");
         jobProcessing(job);
+        const notice = await Noticification.create({
+            title:"New job has been posted",
+            message:`${title} job aa gyi job aa gyi`,
+            relatedJob: job._id,
+        });
 
+        const socketId = getReceiverSocketId(userId);
 
+        if(socketId){
+            io.to(socketId).emit(
+                "newNotification",notice
+            )
+        }
         return res.status(201).json({
             message: "job created successfully.",
             job,

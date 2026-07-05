@@ -9,7 +9,6 @@ function Alljobs() {
   const job = useSelector((state) => state.job.jobs);
   const navigate = useNavigate();
 
-  // ✅ SINGLE SELECT FILTERS
   const [filters, setFilters] = useState({
     salary: "",
     location: "",
@@ -17,7 +16,7 @@ function Alljobs() {
 
   const [showFilter, setShowFilter] = useState(false);
 
-  // ✅ HANDLE FILTER (toggle)
+ 
   const handleFilterChange = (type, value) => {
     setFilters((prev) => ({
       ...prev,
@@ -25,7 +24,6 @@ function Alljobs() {
     }));
   };
 
-  // ✅ FILTER LOGIC
   const filteredJobs = job?.filter((j) => {
     let salaryMatch = true;
     if (filters.salary === "0-100000") salaryMatch = j.salary <= 100000;
@@ -39,7 +37,7 @@ function Alljobs() {
     return salaryMatch && locationMatch;
   });
 
-  // ✅ SIDEBAR UI
+ 
   const FilterSidebar = () => (
     <div className="p-4 space-y-6">
 
@@ -102,12 +100,11 @@ function Alljobs() {
       {/* Layout */}
       <div className="flex gap-6 p-4 lg:p-8">
 
-        {/* Sidebar (desktop) */}
         <div className="hidden md:block w-64 bg-white shadow rounded-xl h-fit sticky top-20">
           <FilterSidebar />
         </div>
 
-        {/* Jobs */}
+     
         <div className="flex-1">
 
           {/* Mobile Filter Button */}

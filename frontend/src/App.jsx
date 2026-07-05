@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { Routes, Route } from 'react-router-dom'
 import Homepage from './pages/homepage.jsx'
 import Login from './pages/login.jsx';
@@ -19,7 +20,11 @@ import ProtectedRoute from "./components/admin/protectedroute.jsx";
 import RecruiterRoute from './components/admin/recruiterroute.jsx';
 import JobApplicants from "./pages/recruiter/JobApplicants";
 import ScheduleInterview from "./pages/recruiter/ScheduleInterview";
+import Notice from './pages/notice.jsx';
+import { connectSocket } from './utils/socket.js';
+
 function App() {
+
 
   return (
     <>
@@ -31,6 +36,7 @@ function App() {
         <Route path="/jobdetails/:jobId" element={<ProtectedRoute><JobDetailsPage /></ProtectedRoute>} />
         <Route path="/alljobs" element={<ProtectedRoute><Alljobs /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        <Route path="/notifications" element={<ProtectedRoute><Notice/></ProtectedRoute>} />
         <Route path="/myjobs" element={<ProtectedRoute><Myjobs /></ProtectedRoute>} />
         <Route path="/jobs" element={<ProtectedRoute><Search /></ProtectedRoute>} />
         <Route path="/recruiter/dashboard" element={<RecruiterRoute><RecruiterDashboard /></RecruiterRoute>} />

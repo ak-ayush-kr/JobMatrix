@@ -56,7 +56,7 @@ function JobDetailsPage() {
     useState(null);
 
   const [showStatusDialog, setShowStatusDialog] =
-    useState(false);
+    useState(true);
 
   const { user } = useSelector(
     (state) => state.auth
@@ -82,17 +82,11 @@ function JobDetailsPage() {
       const data = await res.json();
 
       if (res.ok) {
-
         setApplicationStatus("pending");
-
         alert("Applied Successfully");
-
         fetchApplicationStatus();
-
       } else {
-
         alert(data.message);
-
       }
 
     } catch (error) {
