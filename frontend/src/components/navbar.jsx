@@ -76,6 +76,9 @@ const Navbar = (props) => {
                 <span className="text-sm font-medium text-gray-700">{user.name || "User"}</span>
               </div>
             </button>
+            <button onClick={() => { navigate("/notifications") }} className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 transition-all border border-transparent hover:border-gray-100">
+              <span>🔔</span>
+            </button>
             <button onClick={handleLogout} className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium text-red-500 hover:bg-red-50 transition-all border border-transparent hover:border-red-100">
               <span>↗</span>
               <span className="hidden sm:block">Logout</span>
