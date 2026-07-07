@@ -1,4 +1,5 @@
 import { User } from "../models/user.js";
+import {Noticification} from "../models/noticification.js";
 import bcrypt from 'bcryptjs';
 import cloudinary from "../utils/cloudinary.js";
 import jwt from 'jsonwebtoken';
@@ -77,6 +78,7 @@ export const login = async (req, res) => {
             role: user.role
         }
         const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' });
+        console.log("token generated:", token);
         user = user.toObject();
         user.token = token;
         user.password = undefined;
@@ -173,6 +175,17 @@ export const logout = async(req,res)=>{
         });   
     }catch (error) {
         console.log("error while logging out ",error);
+        res.status(500).json({message:"server error"});
+    }
+}
+
+export const getNotifications = async (req, res) =>{
+    try {
+        const userId = req.user.id;
+        const notifications = await Noticification.find().sort({ createdAt: -1 }).limit(20);
+        return res.status(200).json({ noticifications: notifications });
+    }catch (error) {
+        console.log("error while fetching notifications ",error);
         res.status(500).json({message:"server error"});
     }
 }

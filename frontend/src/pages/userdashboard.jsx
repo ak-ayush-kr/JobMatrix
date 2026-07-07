@@ -7,8 +7,9 @@ import {
 
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-
+import { getSocket } from "../utils/socket";
 import { setJobs } from "../redux/jobSlice";
+import { setNotices, addNotice } from "../redux/noticeSlice";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -32,6 +33,43 @@ function UserDashboard() {
     const timer = setTimeout(() => setLoading(false), 1000);
     return () => clearTimeout(timer);
   }, []);
+
+
+  // fetching noticification from server and storing in redux store
+  useEffect(() => {
+    const fetchNotices = async () => {
+      try{
+        const res = await fetch("http://localhost:5000/api/users/getNotices", {
+          method: "GET",
+          credentials: "include",
+        });
+        if(res.ok){
+          const data = await res.json();
+          dispatch(setNotices(data.noticifications));
+        }
+      }        
+      catch(error){
+        console.error("Error fetching notices:", error);
+      }
+    }
+    fetchNotices();
+  },[]);
+
+// connection to socket and listening for new notifications
+  useEffect(() => {
+    const socket = getSocket();
+    if(!socket) return;
+    const handleNoticification = (notification) => {
+      console.log("New notification received:", notification);
+      dispatch(addNotice(notification));
+    }
+
+    socket.on("newNotification", handleNoticification);
+    return () => {
+      socket.off("newNotification", handleNoticification);
+    }
+  },[]);
+
 
   // FETCH ALL JOBS + APPLICATION STATUS
   useEffect(() => {
@@ -112,11 +150,8 @@ function UserDashboard() {
 
   // SEARCH
   const handleSearch = () => {
-
     if (search.trim()) {
-
       navigate(`/jobs?search=${encodeURIComponent(search.trim())}`);
-
     }
   };
 

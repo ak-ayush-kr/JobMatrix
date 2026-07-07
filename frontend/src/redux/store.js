@@ -3,6 +3,7 @@ import authReducer from "./authslice";
 import jobReducer from "./jobSlice";
 import recruiterJobReducer from "./recruiterJobSlice";
 import companyReducer from "./companySlice";
+import noticeReducer from "./noticeSlice";
 
 import { persistReducer, persistStore } from "redux-persist";
 
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   job: jobReducer,
   recruiterJobs: recruiterJobReducer, // recruiter
   company: companyReducer,
+  noticifications: noticeReducer,
 });
 
 // persist config
