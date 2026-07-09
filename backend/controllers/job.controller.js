@@ -34,18 +34,20 @@ export const postJob = async (req, res) => {
         console.log("working here");
         jobProcessing(job);
         const notice = await Noticification.create({
-            title:"New job has been posted",
-            message:`${title} job aa gyi job aa gyi`,
+            title: "New job has been posted",
+            message: `${title} job aa gyi job aa gyi`,
             relatedJob: job._id,
         });
 
         const socketId = getReceiverSocketId(userId);
+        console.log("socketId is", socketId);
+        console.log("emitting");
 
-        if(socketId){
-            io.to(socketId).emit(
-                "newNotification",notice
-            )
-        }
+        io.emit(
+            "newNotification", notice
+        );
+        console.log("emitted");
+
         return res.status(201).json({
             message: "job created successfully.",
             job,
@@ -63,7 +65,7 @@ export const postJob = async (req, res) => {
 export const getAllJobs = async (req, res) => {
     try {
 
-     
+
 
         const keyword = req.query.keyword || "";
 
@@ -76,7 +78,7 @@ export const getAllJobs = async (req, res) => {
 
         const jobs = await Job.find({
             ...query,
-            isClosed : false
+            isClosed: false
         })
             .populate("company")
             .sort({ createdAt: -1 });
@@ -229,26 +231,26 @@ export const getAppliedJobs = async (req, res) => {
 
         const result = applications.map((app) => ({
 
-    ...app.job._doc,
+            ...app.job._doc,
 
-    applicationStatus: app.status,
+            applicationStatus: app.status,
 
-    recruiterMessage: app.recruiterMessage,
+            recruiterMessage: app.recruiterMessage,
 
-    interviewDate: app.interviewDate,
+            interviewDate: app.interviewDate,
 
-    interviewTime: app.interviewTime,
+            interviewTime: app.interviewTime,
 
-    interviewMode: app.interviewMode,
+            interviewMode: app.interviewMode,
 
-    interviewDetails:
-        app.interviewDate
-            ? `Date: ${app.interviewDate}
+            interviewDetails:
+                app.interviewDate
+                    ? `Date: ${app.interviewDate}
 Time: ${app.interviewTime || "Not specified"}
 Mode: ${app.interviewMode || "Not specified"}`
-            : ""
+                    : ""
 
-}));
+        }));
         return res.status(200).json({ message: "Applied jobs fetched successfully", jobs: result });
     } catch (error) {
         console.log("error while fetching users jobs", error);
@@ -256,7 +258,7 @@ Mode: ${app.interviewMode || "Not specified"}`
     }
 }
 
-export const getMyJob = async (req,res)=>{
+export const getMyJob = async (req, res) => {
 
     try {
 
@@ -265,28 +267,28 @@ export const getMyJob = async (req,res)=>{
         const user = await User.findById(userId);
 
         // user has no job
-        if(!user.currentJob){
+        if (!user.currentJob) {
 
             return res.status(404).json({
-                message : "No active job",
-                success : false
+                message: "No active job",
+                success: false
             });
         }
 
         const job = await Job.findById(user.currentJob)
-        .populate("company");
+            .populate("company");
 
-        if(!job){
+        if (!job) {
 
             return res.status(404).json({
-                message : "Job not found",
-                success : false
+                message: "Job not found",
+                success: false
             });
         }
 
         return res.status(200).json({
             job,
-            success : true
+            success: true
         });
 
     } catch (error) {
@@ -294,12 +296,12 @@ export const getMyJob = async (req,res)=>{
         console.log(error);
 
         return res.status(500).json({
-            message : "Server error",
-            success : false
+            message: "Server error",
+            success: false
         });
     }
 }
-export const deleteJob = async (req,res)=>{
+export const deleteJob = async (req, res) => {
 
     try {
 
@@ -307,36 +309,36 @@ export const deleteJob = async (req,res)=>{
 
         const job = await Job.findById(jobId);
 
-        if(!job){
+        if (!job) {
 
             return res.status(404).json({
-                message : "Job not found",
-                success : false
+                message: "Job not found",
+                success: false
             });
         }
 
         // security check
-        if(
+        if (
             job.created_by.toString()
             !== req.user.id
-        ){
+        ) {
             return res.status(403).json({
-                message : "Unauthorized",
-                success : false
+                message: "Unauthorized",
+                success: false
             });
         }
 
         // delete all related applications
         await Application.deleteMany({
-            job : jobId
+            job: jobId
         });
 
         // delete job
         await Job.findByIdAndDelete(jobId);
 
         return res.status(200).json({
-            message : "Job deleted successfully",
-            success : true
+            message: "Job deleted successfully",
+            success: true
         });
 
     } catch (error) {
@@ -344,8 +346,8 @@ export const deleteJob = async (req,res)=>{
         console.log(error);
 
         return res.status(500).json({
-            message : "Server error",
-            success : false
+            message: "Server error",
+            success: false
         });
     }
 }

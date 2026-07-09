@@ -12,11 +12,14 @@ export const initializeSocket = (server) => {
     })
 
     io.on("connection", (socket) => {
-        const userId = socket.handshake.query.userId;
-        if (userId) {
-            userSockets[userId] = socket.id;
+        const {userId,role}= socket.handshake.query;
+        if(role === "user"){
+            socket.join("user");
         }
-        console.log("connect to socket",userId);
+        if(role === "recruiter"){
+            socket.join("recruiter");
+        }
+        // console.log("connect to socket",userId);
 
         socket.on("disconnect", () => {
             delete userSockets[userId];

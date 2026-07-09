@@ -22,12 +22,14 @@ import JobApplicants from "./pages/recruiter/JobApplicants";
 import ScheduleInterview from "./pages/recruiter/ScheduleInterview";
 import Notice from './pages/notice.jsx';
 import { connectSocket } from './utils/socket.js';
+import { SocketProvider } from './components/admin/socketProvider.jsx';
 
 function App() {
 
 
   return (
     <>
+      <SocketProvider />
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/login" element={<Login/>} />

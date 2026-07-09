@@ -12,7 +12,7 @@ const noticeSlice = createSlice({
             state.noticifications = action.payload;
         },
         addNotice: (state, action) => {
-            state.noticifications.push(action.payload);
+            state.noticifications.unshift(action.payload);
         }
     }
 });

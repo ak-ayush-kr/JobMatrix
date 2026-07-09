@@ -4,6 +4,7 @@ import { Briefcase } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useDispatch } from 'react-redux';
+import { logoutUser } from '../redux/authslice.js';
 
 
 const Navbar = (props) => {

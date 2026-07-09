@@ -35,7 +35,7 @@ function Login() {
         console.log(data);
         if (res.ok) {
             dispatch(setUser(data.userDetails));
-            connectSocket(data.userDetails._id);
+            connectSocket(data.userDetails._id,data.userDetails.role);
             
             if (data.userDetails.role === "recruiter") {
                 navigate("/recruiter/dashboard");
