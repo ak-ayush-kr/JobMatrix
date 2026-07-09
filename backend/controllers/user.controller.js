@@ -163,21 +163,24 @@ export const updateProfile = async (req, res) => {
     }
 }
 
-export const logout = async(req,res)=>{
+export const logout = async (req, res) => {
     try {
-        return res.status(200).cookie("token","",{
-            maxAge:0,
-            httpOnly:true,
-            secure:false,
-            sameSite:"strict",
-        }).json({
-            message:"logged out successfully"
-        });   
-    }catch (error) {
-        console.log("error while logging out ",error);
-        res.status(500).json({message:"server error"});
+        res.clearCookie("token", {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict",
+        });
+
+        return res.status(200).json({
+            message: "Logged out successfully",
+        });
+    } catch (error) {
+        console.error("Error while logging out:", error);
+        return res.status(500).json({
+            message: "Server error",
+        });
     }
-}
+};
 
 export const getNotifications = async (req, res) =>{
     try {

@@ -55,21 +55,22 @@ function UserDashboard() {
     fetchNotices();
   },[]);
 
-// connection to socket and listening for new notifications
-  useEffect(() => {
-    const socket = getSocket();
-    if(!socket) return;
-    const handleNoticification = (notification) => {
-      console.log("New notification received:", notification);
-      dispatch(addNotice(notification));
-    }
+  // useEffect(() => {
+  //       const socket = getSocket();
+  //       if (!socket) return;
 
-    socket.on("newNotification", handleNoticification);
-    return () => {
-      socket.off("newNotification", handleNoticification);
-    }
-  },[]);
+  //       const handleNotification = (notification) => {
+  //           console.log("New notification received:", notification);
+  //           dispatch(addNotice(notification));
+  //       };
 
+  //       socket.on("newNotification", handleNotification);
+  //       console.log("listenting to notice");
+  //       return () => {
+  //           console.log("unlistening");
+  //           socket.off("newNotification", handleNotification);
+  //       };
+  //   }, [user, dispatch]);
 
   // FETCH ALL JOBS + APPLICATION STATUS
   useEffect(() => {
