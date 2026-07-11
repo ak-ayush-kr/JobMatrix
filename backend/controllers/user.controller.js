@@ -60,17 +60,17 @@ export const login = async (req, res) => {
         console.log("login called");
         const { email, password, role } = req.body;
         if (!email || !password || !role) {
-            return res.status(400).json({ message: 'All fields are required' });
+            return res.status(400).json({ message: 'All fields are required !' });
         }
 
         let user = await User.findOne({ email, role });
         if (!user) {
-            return res.status(400).json({ message: 'user not registered' });
+            return res.status(400).json({ message: 'user is not registered !' });
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res.status(400).json({ message: 'wrong password' });
+            return res.status(400).json({ message: 'Enter the correct password' });
         }
         const payload = {
             email: user.email,
