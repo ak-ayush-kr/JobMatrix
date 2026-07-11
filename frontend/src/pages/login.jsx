@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { setUser } from '../redux/authslice';
 import { useDispatch } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { Briefcase, Mail, Lock, Eye, EyeOff, User, Building2, CheckCircle2, ArrowRight, Loader2 } from 'lucide-react';
 import { connectSocket } from '../utils/socket.js';
@@ -36,12 +37,16 @@ function Login() {
         if (res.ok) {
             dispatch(setUser(data.userDetails));
             connectSocket(data.userDetails._id,data.userDetails.role);
-            
+     
             if (data.userDetails.role === "recruiter") {
                 navigate("/recruiter/dashboard");
             } else {
                 navigate("/userdashboard");
             }
+        }
+        else{
+          console.log(data.message);
+          toast.error(data.message);
         }
     }catch (error) {
         console.error("Error logging in:", error);
@@ -53,7 +58,7 @@ function Login() {
 
   return (
     <div className="min-h-screen bg-linear-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center p-4">
-
+      <ToastContainer />
       <div className="w-full md:w-1/2 max-w-5xl  rounded-3xl overflow-hidden shadow-2xl shadow-blue-100/60 bg-blue-500">
         <div className="flex items-center gap-2 mt-6 px-8 mb-4">
           <div className="w-7 h-7 rounded-lg bg-white flex items-center justify-center">

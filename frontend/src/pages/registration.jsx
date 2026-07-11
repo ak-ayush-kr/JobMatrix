@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useRef } from 'react'
 import { User, Mail, Lock, Phone, Eye, EyeOff, Upload,Briefcase, Building2, CheckCircle2, Loader2, ArrowRight, Axis3DIcon } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer,toast } from 'react-toastify';
 
 function Registration() {
     const fileRef = useRef(null);
@@ -43,6 +44,9 @@ function Registration() {
             if(res.ok){
                 navigate("/login");
             }
+            else{
+                toast(data.message);
+            }
         } catch (error) {
         console.error("Registration error:", error);
         } finally {
@@ -52,7 +56,7 @@ function Registration() {
 
     return (
         <div className="min-h-screen bg-linear-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center p-4">
-            
+            <ToastContainer />
             <div className="w-full md:w-1/2 max-w-5xl  rounded-3xl overflow-hidden shadow-2xl shadow-blue-100/60 bg-blue-500">
                 <div className="flex items-center gap-2 mt-6 px-8 mb-4">
                     <div className="w-7 h-7 rounded-lg bg-white flex items-center justify-center">
