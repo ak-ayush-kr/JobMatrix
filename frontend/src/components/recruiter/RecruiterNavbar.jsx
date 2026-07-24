@@ -11,7 +11,7 @@ const RecruiterNavbar = () => {
   const navitem = [
     { label: "Home",path:"/recruiter/dashboard"},
     { label: "My Companies",path:"/recruiter/my-companies"},
-    { label: "My Jobs", path:"/recruiter/my-jobs"},
+    { label: "Interview", path:"/recruiter/interview"},
   ]
 
   const dispatch = useDispatch();
@@ -48,7 +48,7 @@ const RecruiterNavbar = () => {
       <div className="hidden md:flex gap-6 text-gray-900 font-semibold">
         <span onClick={() => navigate("/recruiter/dashboard")} className="cursor-pointer hover:text-blue-900">Home</span>
         <span onClick={() => navigate("/recruiter/my-companies")} className="cursor-pointer hover:text-blue-900">My Companies</span>
-        <span onClick={() => navigate("/recruiter/my-jobs")} className="cursor-pointer hover:text-blue-900">My Jobs</span>
+        <span onClick={() => navigate("/recruiter/interview")} className="cursor-pointer hover:text-blue-900">Interviews</span>
       </div>
 
       <div className="flex gap-4">

@@ -1,5 +1,6 @@
 import { Application } from "../models/application.js";
 import { Job } from "../models/job.js";
+import { Interview } from "../models/interview.js";
 import { User } from "../models/user.js";
 import {
     sendApplicationStatusEmail,
@@ -14,47 +15,47 @@ export const applyToJob = async (req, res) => {
 
         const user = await User.findById(applicantId);
         // resume check
-        if(!user.profile?.resume){
+        if (!user.profile?.resume) {
             return res.status(400).json({
-                message : "Upload resume first before applying",
-                success : false
+                message: "Upload resume first before applying",
+                success: false
             });
         }
-        // already employed
      
 
+
         const existingApplication = await Application.findOne({
-            job : jobId,
-            applicant : applicantId
+            job: jobId,
+            applicant: applicantId
         });
 
-        if(existingApplication){
+        if (existingApplication) {
             return res.status(400).json({
-                message : "Already applied",
-                success : false
+                message: "Already applied",
+                success: false
             });
         }
 
         const job = await Job.findById(jobId);
 
-        if(!job){
+        if (!job) {
             return res.status(404).json({
-                message : "Job not found",
-                success : false
+                message: "Job not found",
+                success: false
             });
         }
 
         // closed job
-        if(job.isClosed){
+        if (job.isClosed) {
             return res.status(400).json({
-                message : "Job is closed",
-                success : false
+                message: "Job is closed",
+                success: false
             });
         }
 
         const application = await Application.create({
-            job : jobId,
-            applicant : applicantId
+            job: jobId,
+            applicant: applicantId
         });
 
         job.applications.push(application._id);
@@ -62,9 +63,9 @@ export const applyToJob = async (req, res) => {
         await job.save();
 
         return res.status(201).json({
-            message : "Applied successfully",
+            message: "Applied successfully",
             application,
-            success : true
+            success: true
         });
 
     } catch (error) {
@@ -72,8 +73,8 @@ export const applyToJob = async (req, res) => {
         console.log(error);
 
         return res.status(500).json({
-            message : "Server error",
-            success : false
+            message: "Server error",
+            success: false
         });
     }
 };
@@ -83,19 +84,19 @@ export const getAppliedJobs = async (req, res) => {
         const userId = req.user.id;
         const applications = await Application.find({ applicant: userId }).populate({
             path: "job",
-            options: {sort: { createdAt: -1 }},
-            populate: { 
+            options: { sort: { createdAt: -1 } },
+            populate: {
                 path: "company",
-                options: { sort: { createdAt: -1 }}
+                options: { sort: { createdAt: -1 } }
             }
         });
 
-        if(!applications) {
-            console.log("No applications found for user ID:", userId);  
+        if (!applications) {
+            console.log("No applications found for user ID:", userId);
             return res.status(404).json({ message: "No applications found" });
         }
 
-        return res.status(200).json({ 
+        return res.status(200).json({
             message: "Applied jobs fetched successfully",
             applications,
             success: true
@@ -111,18 +112,18 @@ export const getApplicants = async (req, res) => {
         const jobID = req.params.jobId;
         const job = await Job.findById(jobID).populate({
             path: "applications",
-            options: { sort: { createdAt: -1 }},
+            options: { sort: { createdAt: -1 } },
             populate: {
                 path: "applicant",
             }
         });
 
-        if(!job) {
+        if (!job) {
             console.log("Job not found with ID:", jobID);
             return res.status(404).json({ message: "Job not found" });
         }
 
-        return res.status(200).json({ message: "Applicants fetched successfully", success: true , applicants: job.applications });
+        return res.status(200).json({ message: "Applicants fetched successfully", success: true, applicants: job.applications });
 
     } catch (error) {
         console.log("Error in getApplicants controller:", error);
@@ -139,29 +140,29 @@ export const updateStatus = async (req, res) => {
         const applicationId = req.params.id;
 
         const application = await Application.findById(applicationId)
-        .populate("applicant")
-        .populate({
-            path : "job",
-            populate : {
-                path : "company"
-            }
-        });
+            .populate("applicant")
+            .populate({
+                path: "job",
+                populate: {
+                    path: "company"
+                }
+            });
 
-        if(!application){
+        if (!application) {
             return res.status(404).json({
-                message : "Application not found",
-                success : false
+                message: "Application not found",
+                success: false
             });
         }
 
         // SECURITY CHECK
-        if(
+        if (
             application.job.created_by.toString()
             !== req.user.id
-        ){
+        ) {
             return res.status(403).json({
-                message : "Unauthorized",
-                success : false
+                message: "Unauthorized",
+                success: false
             });
         }
 
@@ -171,15 +172,15 @@ export const updateStatus = async (req, res) => {
 
         // SEND EMAIL
         await sendApplicationStatusEmail({
-            to : application.applicant.email,
-            userName : application.applicant.name,
-            companyName : application.job.company.name,
-            jobTitle : application.job.title,
+            to: application.applicant.email,
+            userName: application.applicant.name,
+            companyName: application.job.company.name,
+            jobTitle: application.job.title,
             status
         });
 
         // IF ACCEPTED
-        if(status === "accepted"){
+        if (status === "accepted") {
 
             const user = await User.findById(
                 application.applicant._id
@@ -187,7 +188,7 @@ export const updateStatus = async (req, res) => {
 
             user.currentJob = application.job._id;
 
-            
+
 
             await user.save();
 
@@ -202,8 +203,8 @@ export const updateStatus = async (req, res) => {
         }
 
         return res.status(200).json({
-            message : `Application ${status}`,
-            success : true
+            message: `Application ${status}`,
+            success: true
         });
 
     } catch (error) {
@@ -211,12 +212,12 @@ export const updateStatus = async (req, res) => {
         console.log(error);
 
         return res.status(500).json({
-            message : "Server error",
-            success : false
+            message: "Server error",
+            success: false
         });
     }
 };
-export const getApplicationStatus = async (req,res)=>{
+export const getApplicationStatus = async (req, res) => {
     try {
 
         const { jobId } = req.params;
@@ -224,24 +225,24 @@ export const getApplicationStatus = async (req,res)=>{
         const applicantId = req.user.id;
 
         const application = await Application.findOne({
-            job : jobId,
-            applicant : applicantId
+            job: jobId,
+            applicant: applicantId
         });
 
         // user has not applied
-        if(!application){
+        if (!application) {
             return res.status(200).json({
-                applied : false,
-                success : true
+                applied: false,
+                success: true
             });
         }
 
         // user has applied
         return res.status(200).json({
-            applied : true,
-            status : application.status,
+            applied: true,
+            status: application.status,
             application,
-            success : true
+            success: true
         });
 
     } catch (error) {
@@ -249,16 +250,16 @@ export const getApplicationStatus = async (req,res)=>{
         console.log(error);
 
         return res.status(500).json({
-            message : "Server error",
-            success : false
+            message: "Server error",
+            success: false
         });
     }
 }
-export const scheduleInterview = async (req,res)=>{
+export const scheduleInterview = async (req, res) => {
 
     try {
 
-                const {
+        const {
             interviewDate,
             interviewTime,
             interviewMode,
@@ -267,37 +268,37 @@ export const scheduleInterview = async (req,res)=>{
 
         const applicationId = req.params.id;
 
-        if(!interviewDate ){
+        if (!interviewDate) {
             return res.status(400).json({
-                message : "Interview date required",
-                success : false
+                message: "Interview date required",
+                success: false
             });
         }
 
         const application = await Application.findById(applicationId)
-        .populate("applicant")
-        .populate({
-            path : "job",
-            populate : {
-                path : "company"
-            }
-        });
+            .populate("applicant")
+            .populate({
+                path: "job",
+                populate: {
+                    path: "company"
+                }
+            });
 
-        if(!application){
+        if (!application) {
             return res.status(404).json({
-                message : "Application not found",
-                success : false
+                message: "Application not found",
+                success: false
             });
         }
 
         // recruiter security check
-        if(
+        if (
             application.job.created_by.toString()
             !== req.user.id
-        ){
+        ) {
             return res.status(403).json({
-                message : "Unauthorized",
-                success : false
+                message: "Unauthorized",
+                success: false
             });
         }
 
@@ -320,13 +321,13 @@ export const scheduleInterview = async (req,res)=>{
         await application.save();
         const mailOptions = {
 
-            from : process.env.EMAIL_USER,
+            from: process.env.EMAIL_USER,
 
-            to : application.applicant.email,
+            to: application.applicant.email,
 
-            subject : `Interview Scheduled - ${application.job.title}`,
+            subject: `Interview Scheduled - ${application.job.title}`,
 
-            html : `
+            html: `
                 <div>
                     <h2>Hello ${application.applicant.name}</h2>
 
@@ -376,10 +377,10 @@ export const scheduleInterview = async (req,res)=>{
 
         await transporter.sendMail(mailOptions);
         return res.status(200).json({
-            message : "Interview scheduled successfully",
+            message: "Interview scheduled successfully",
             roomId,
             application,
-            success : true
+            success: true
         });
 
     } catch (error) {
@@ -387,8 +388,26 @@ export const scheduleInterview = async (req,res)=>{
         console.log(error);
 
         return res.status(500).json({
-            message : "Server error",
-            success : false
+            message: "Server error",
+            success: false
         });
     }
 }
+
+
+
+export const getKitToken = async (req, res) => {
+    try {
+        res.status(200).json({
+            success: true,
+            appId: Number(process.env.ZEGO_APP_ID),
+            serverSecret: process.env.ZEGO_SERVER_SECRET,
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            success: false,
+            message: "Failed to generate token",
+        });
+    }
+};

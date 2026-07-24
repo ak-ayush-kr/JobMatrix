@@ -35,7 +35,7 @@ const Myjobs = () => {
   return (
     <div className='bg-white w-full min-h-screen flex flex-col'>
       <Navbar active="My Jobs" />
-      <div className= "flex-1">
+      <div className= "flex-1 pt-16">
       <div className='w-full bg-linear-to-r from-blue-100 to-white flex items-center justify-center'>
         <h1 className='text-3xl font-bold text-blue-500 py-10'>My Jobs</h1>
       </div>
@@ -54,19 +54,19 @@ const Myjobs = () => {
                     <div className='rounded-full p-3 px-5 bg-blue-500 text-white font-bold text-lg mr-3'>
                       {job?.company?.name?.charAt(0).toUpperCase()}
                     </div>
-                    <h3 className='text-xl font-bold text-gray-800'>{job.title}</h3>
+                    <h3 className=' text-sm sm:text-xl font-bold text-gray-800'>{job.title}</h3>
                   </div>
                   <div className='mr-3'>
-                    <button className='p-2 bg-blue-500 rounded-lg text-md text-white hover:bg-blue-600 transition'>
+                    <button className='p-2 bg-blue-500 rounded-lg text-sm sm:text-md text-white hover:bg-blue-600 transition'>
                       view Details
                     </button>
                   </div>
                 </div>
                 <div className='ml-3'>
-                  <p className='text-gray-800 text-sm lg:text-md flex'> 🏛️Company: {job?.company?.name}</p>
-                  <p className='text-gray-800 text-sm lg:text-md'>💰Salary: {job.salary}</p>
-                  <p className='text-gray-800 text-sm lg:text-md'>📍Location: {job.location}</p>
-                  <p className='text-gray-800 text-sm lg:text-md'>Status: <span className={`font-bold ${statusColors[job.applicationStatus] || "text-gray-500"}`}>
+                  <p className='text-gray-800 text-xs sm:text-sm lg:text-md flex'> 🏛️Company: {job?.company?.name}</p>
+                  <p className='text-gray-800 text-xs sm:text-sm lg:text-md'>💰Salary: {job.salary}</p>
+                  <p className='text-gray-800 text-xs sm:text-sm lg:text-md'>📍Location: {job.location}</p>
+                  <p className='text-gray-800 text-xs sm:text-sm lg:text-md'>Status: <span className={`font-bold ${statusColors[job.applicationStatus] || "text-gray-500"}`}>
                     {job.applicationStatus}
                   </span></p>
                 </div>

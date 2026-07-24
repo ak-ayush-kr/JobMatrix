@@ -23,7 +23,9 @@ import ScheduleInterview from "./pages/recruiter/ScheduleInterview";
 import Notice from './pages/notice.jsx';
 import { connectSocket } from './utils/socket.js';
 import { SocketProvider } from './components/admin/socketProvider.jsx';
-
+import Interview from './pages/recruiter/Interview.jsx';
+import StudInterviews from './pages/StudInterviews.jsx';
+import InterviewRoom from './pages/InterviewRoom.jsx';
 function App() {
 
 
@@ -47,11 +49,13 @@ function App() {
         <Route path="/recruiter/my-companies" element={<RecruiterRoute><MyCompanies /></RecruiterRoute>} />
         <Route path="/recruiter/my-jobs" element={<RecruiterRoute><MyJobsRecruiter /></RecruiterRoute>} />
         <Route path="/update-company/:id" element={<RecruiterRoute><UpdateCompany /></RecruiterRoute>} />
+        <Route path="/user/interview" element={<ProtectedRoute> <StudInterviews/> </ProtectedRoute>}/>
         <Route
           path="/recruiter/job/:jobId"
           element={<JobApplicants />}
         />
-
+        <Route path="/recruiter/interview" element={<RecruiterRoute><Interview/></RecruiterRoute>}/>
+        <Route path="/interview/:roomId" element={<InterviewRoom/>}/>
         <Route
           path="/recruiter/schedule-interview/:applicationId"
           element={<ScheduleInterview />}

@@ -88,6 +88,7 @@ function Alljobs() {
       <Navbar active="All Jobs" />
 
       {/* Hero */}
+      <div className="pt-16">
       <section className="bg-linear-to-br from-blue-700 via-blue-600 to-indigo-700 text-center py-8">
         <h1 className="text-3xl font-bold text-white">
           Explore Opportunities at JobMatrix
@@ -179,6 +180,7 @@ function Alljobs() {
           </div>
         </div>
       )}
+      </div>
       <Footer/>
     </div>
   );
