@@ -1,4 +1,6 @@
 import {Company} from "../models/company.js";
+import { Application } from "../models/application.js";
+import { Interview } from "../models/interview.js";
 import getDataUri from "../utils/datauri.js";
 import cloudinary from "../utils/cloudinary.js";
 
@@ -146,3 +148,60 @@ export const updateCompany = async (req, res) => {
         })
     }
 }
+
+export const scheduleInterview = async (req, res) => {
+    try {
+        const {scheduledDate,applicationId} = req.body;
+        console.log(req.body);
+        const recruiterId = req.user.id;
+        if(!scheduledDate || !applicationId) {
+            return res.status(400).json({
+                message : "Candidate ID and Scheduled Date are required.",
+                success : false
+            });
+        }
+        const application = await Application.findById(applicationId);
+        if (!application) {
+            return res.status(404).json({
+                success: false,
+                message: "Application not found."
+            });
+        }
+
+        if (application.status === "interview_scheduled") {
+            return res.status(400).json({
+                success: false,
+                message: "Interview already scheduled."
+            });
+        }
+        
+        const code = crypto.randomUUID();
+      
+        const interview = await Interview.create({
+            recruiterId,
+            userId: application.applicant,
+            jobDetail: application.job,
+            scheduledAt: new Date(scheduledDate),
+            code
+        });
+
+       
+        application.status = "interview_scheduled";
+        await application.save();
+
+        return res.status(201).json({
+            success: true,
+            message: "Interview scheduled successfully.",
+            interview
+        });
+    }
+    catch (error) {
+        console.log(error);
+        console.log("Error while scheduling interview");
+        res.status(500).json({
+            success:false,
+            data:"Error while scheduling interview",
+            message:error.message
+        })
+    }
+}   

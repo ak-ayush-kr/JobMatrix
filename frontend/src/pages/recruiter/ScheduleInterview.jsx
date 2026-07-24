@@ -4,98 +4,98 @@ import axiosInstance from "../../utils/axios";
 import RecruiterNavbar from "../../components/recruiter/RecruiterNavbar";
 
 const ScheduleInterview = () => {
+    const {applicationId} = useParams();
+    const navigate = useNavigate();
 
-  const { applicationId } = useParams();
-
-  const navigate = useNavigate();
-
-  const [formData, setFormData] = useState({
-    interviewDate: "",
-  });
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
+    const [formData, setFormData] = useState({
+        interviewDate: "",
     });
-  };
 
-  const handleSubmit = async (e) => {
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
+    };
 
-    e.preventDefault();
-    console.log("Sending Data => ", formData);
-    try {
+    const handleSubmit = async (e) => {
 
-      await axiosInstance.put(
-        `/application/scheduleInterview/${applicationId}`,
-        formData
-      );
+        e.preventDefault();
+        console.log("Sending Data => ", formData.interviewDate);
+        try {
+            const scheduledDate = formData.interviewDate;
+            const res = await fetch("http://localhost:5000/api/application/scheduled",{
+                method:"POST",
+                headers:{
+                    "Content-Type": "application/json",
+                },
+                credentials:"include",
+                body:JSON.stringify({scheduledDate,applicationId}),
+            });
+            
+            if(res.ok){
+                alert("Interview Scheduled");
+                navigate("/recruiter/my-companies");
+            }
+        } catch (error) {
+            console.log("FULL ERROR => ", error);
 
-      alert("Interview Scheduled");
+            console.log(
+                "BACKEND RESPONSE => ",
+                error?.response?.data
+            );
 
-      navigate("/recruiter/my-companies");
+            alert(
+                error?.response?.data?.message ||
+                "Something went wrong"
+            );
+        }
+    };
 
-    } catch (error) {
-  console.log("FULL ERROR => ", error);
+    return (
+        <>
+            <RecruiterNavbar />
 
-  console.log(
-    "BACKEND RESPONSE => ",
-    error?.response?.data
-  );
+            <div className="min-h-screen bg-gray-50 flex justify-center items-center">
+                <div className="bg-white shadow-xl rounded-xl p-8 w-full max-w-lg">
+                    <h1 className="text-2xl font-bold mb-6">
+                        Schedule Interview
+                    </h1>
 
-  alert(
-    error?.response?.data?.message ||
-    "Something went wrong"
-  );
-}
-  };
+                    <form
+                        onSubmit={handleSubmit}
+                        className="space-y-5"
+                    >
 
-  return (
-    <>
-      <RecruiterNavbar />
+                        <div>
+                            <label className="font-medium">
+                                Interview Date & Time
+                            </label>
 
-      <div className="min-h-screen bg-gray-50 flex justify-center items-center">
+                            <input
+                                type="datetime-local"
+                                name="interviewDate"
+                                value={formData.interviewDate}
+                                onChange={handleChange}
+                                className="w-full border p-3 rounded mt-2"
+                                required
+                            />
+                        </div>
 
-        <div className="bg-white shadow-xl rounded-xl p-8 w-full max-w-lg">
+                        <button
+                            type="submit"
+                            className="w-full bg-blue-600 text-white py-3 rounded"
+                        >
+                            Schedule Interview
+                        </button>
 
-          <h1 className="text-2xl font-bold mb-6">
-            Schedule Interview
-          </h1>
+                    </form>
 
-          <form
-            onSubmit={handleSubmit}
-            className="space-y-5"
-          >
+                </div>
 
-            <div>
-              <label className="font-medium">
-                Interview Date & Time
-              </label>
-
-              <input
-                type="datetime-local"
-                name="interviewDate"
-                value={formData.interviewDate}
-                onChange={handleChange}
-                className="w-full border p-3 rounded mt-2"
-                required
-              />
             </div>
-
-            <button
-              type="submit"
-              className="w-full bg-blue-600 text-white py-3 rounded"
-            >
-              Schedule Interview
-            </button>
-
-          </form>
-
-        </div>
-
-      </div>
-    </>
-  );
+        </>
+    );
 };
 
 export default ScheduleInterview;

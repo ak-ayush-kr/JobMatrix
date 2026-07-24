@@ -45,7 +45,6 @@ const applicationSchema = new mongoose.Schema({
         type : String,
         default : ""
     }
-
 },{timestamps : true});
 
 export const Application = mongoose.model("Application", applicationSchema);

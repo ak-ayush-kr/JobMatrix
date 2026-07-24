@@ -3,6 +3,7 @@ import {Noticification} from "../models/noticification.js";
 import bcrypt from 'bcryptjs';
 import cloudinary from "../utils/cloudinary.js";
 import jwt from 'jsonwebtoken';
+import { Interview } from "../models/interview.js";
 
 export const register = async (req, res) => {
     try {
@@ -190,5 +191,80 @@ export const getNotifications = async (req, res) =>{
     }catch (error) {
         console.log("error while fetching notifications ",error);
         res.status(500).json({message:"server error"});
+    }
+}
+
+
+export const getInterviewlist = async(req,res)=>{
+    try {
+        const userid = req.user.id;
+        const role = req.user.role;
+        let query = {};
+
+        if(role === "recruiter"){
+            query.recruiterId = userid;
+        }else{
+            query.userId = userid;
+        }
+
+        const interviewlist = await Interview.find(query)
+        .populate("jobDetail","title")
+        .populate("userId","name")
+        .sort({scheduledAt:1});
+
+
+        return res.status(200).json({
+            interviewlist,
+            message:"successfully fetched",
+        });
+    } catch (error) {
+        console.log("error while fetching interview list",error);
+        return res.status(500).json({message:"server error"});
+    }
+}
+
+export const getInterviewDetail = async(req,res)=>{
+    try {
+        const interviewId = req.params.id;
+        
+        const userId = req.user.id;
+
+        const interview = await Interview.findById(interviewId);
+        const isRecruiter = interview.recruiterId._id.toString() === userId;
+        const isCandidate = interview.userId._id.toString() === userId;
+     
+
+        if(!isRecruiter && !isCandidate){
+            return res.status(401).json("Unauthorized access !! ");
+        }
+
+        const now = new Date();
+        const interviewTime = new Date(interview.scheduledAt);
+
+     
+        const joinStart = new Date(interviewTime.getTime() - 5 * 60 * 1000);
+        const joinEnd = new Date(interviewTime.getTime() + 60 * 60 * 1000);
+
+        // if (now < joinStart) {
+        //     return res.status(400).json({
+        //         success: false,
+        //         message: "Interview has not started yet."
+        //     });
+        // }
+        // if (now > joinEnd) {
+        //     return res.status(400).json({
+        //         success: false,
+        //         message: "Interview time has expired."
+        //     });
+        // }
+        const code = interview.code;
+        return res.status(200).json({
+            code,
+            message:"successfully get code"
+        });
+
+    } catch (error) {
+        console.log("error while fetching interview detail",error);
+        return res.status(500).json("server error");
     }
 }

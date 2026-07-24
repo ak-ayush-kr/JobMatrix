@@ -6,9 +6,7 @@ import RecruiterNavbar from "../../components/recruiter/RecruiterNavbar";
 const JobApplicants = () => {
 
   const { jobId } = useParams();
-
   const navigate = useNavigate();
-
   const [job, setJob] = useState(null);
 
   const fetchJob = async () => {
@@ -48,16 +46,13 @@ const JobApplicants = () => {
   return (
     <>
       <RecruiterNavbar />
-
       <div className="p-6 bg-gray-50 min-h-screen">
 
         {/* JOB DETAILS */}
 
         {job && (
           <div className="bg-white rounded-xl shadow p-6 mb-6">
-
             <div className="flex justify-between items-center">
-
               <div>
                 <h1 className="text-2xl font-bold">
                   {job.title}

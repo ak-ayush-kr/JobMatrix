@@ -1,5 +1,5 @@
 import express from 'express';
-import { register,login, logout } from '../controllers/user.controller.js';
+import { register,login, logout, getInterviewlist, getInterviewDetail } from '../controllers/user.controller.js';
 import { upload } from '../middleware/multer.js';
 import { updateProfile } from '../controllers/user.controller.js';
 import { getNotifications } from '../controllers/user.controller.js';   
@@ -14,7 +14,8 @@ router.post("/updateProfile",getUser,upload.fields([
     updateProfile
 );
 router.get("/getNotices",getUser,getNotifications);
-
+router.get("/interviewlist",getUser,getInterviewlist);
+router.get("/interview/:id",getUser,getInterviewDetail);
 router.get("/logout",logout);
 
 export default router;

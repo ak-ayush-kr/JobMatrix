@@ -38,22 +38,22 @@ function UserDashboard() {
   // fetching noticification from server and storing in redux store
   useEffect(() => {
     const fetchNotices = async () => {
-      try{
+      try {
         const res = await fetch("http://localhost:5000/api/users/getNotices", {
           method: "GET",
           credentials: "include",
         });
-        if(res.ok){
+        if (res.ok) {
           const data = await res.json();
           dispatch(setNotices(data.noticifications));
         }
-      }        
-      catch(error){
+      }
+      catch (error) {
         console.error("Error fetching notices:", error);
       }
     }
     fetchNotices();
-  },[]);
+  }, []);
 
   // useEffect(() => {
   //       const socket = getSocket();
@@ -178,11 +178,11 @@ function UserDashboard() {
         const updated = alljob.map((job) =>
           job._id === jobId
             ? {
-                ...job,
-                applicationStatus: "applied",
-                recruiterMessage:
-                  "Application submitted successfully.",
-              }
+              ...job,
+              applicationStatus: "applied",
+              recruiterMessage:
+                "Application submitted successfully.",
+            }
             : job
         );
 
@@ -213,139 +213,140 @@ function UserDashboard() {
       <Navbar active="Home" />
 
       {/* HERO */}
-      <div className="relative overflow-hidden bg-linear-to-br from-blue-600 via-blue-700 to-indigo-800">
-        <div className="hero-glow absolute inset-0" />
-        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)", backgroundSize: "32px 32px" }} />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-          <div className="flex flex-col lg:flex-row items-center gap-8">
-            <div className="flex-1 text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-blue-100 text-xs font-semibold px-3 py-1.5 rounded-full mb-4 border border-white/10">
-                <span className="pulse-dot w-2 h-2 rounded-full bg-green-400 inline-block" />
-                247 new jobs posted today
-              </div>
-              <h1 className="text-4xl lg:text-5xl font-bold text-white mb-3 leading-tight" style={{ fontFamily: "'Sora', sans-serif" }}>
-                Welcome Back,<br />
-                <span className="text-blue-200">{user.name || "User"}! 👋</span>
-              </h1>
-              <p className="text-blue-200 text-lg mb-6 max-w-lg">
-                Your dream role is out there. You're <span className="text-white font-semibold">3 steps away</span> from landing your next opportunity.
-              </p>
-              {/* Search */}
-              <div className="flex gap-2 max-w-xl">
-                <div className="flex-1 flex items-center gap-3 bg-white rounded-2xl px-4 py-3 shadow-xl">
-                  <span className="text-gray-400 text-lg shrink-0">🔍</span>
-                  <input
-                    type="text"
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    placeholder="Search jobs, companies..."
-                    className="flex-1 text-gray-800 placeholder-gray-400 text-sm font-medium outline-none bg-transparent search-glow"
-                  />
-                  {search && (
-                    <button onClick={() => setSearch("")} className="text-gray-400 hover:text-gray-600 shrink-0">✕</button>
-                  )}
+      <div className="pt-16">
+        <div className="relative overflow-hidden bg-linear-to-br from-blue-600 via-blue-700 to-indigo-800 p-2">
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+
+            <div className="flex flex-col lg:flex-row items-center gap-8">
+              <div className="flex-1 text-center lg:text-left">
+                <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-blue-100 text-xs font-semibold px-3 py-1.5 rounded-full mb-4 border border-white/10">
+                  <span className="pulse-dot w-2 h-2 rounded-full bg-green-400 inline-block" />
+                  247 new jobs posted today
                 </div>
-                <button className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white px-5 py-3 rounded-2xl font-semibold text-sm border border-white/20 transition-all whitespace-nowrap"
-                  onClick={handleSearch}>
-                  Search
-                </button>
+                <h1 className="text-xl sm:text-4xl lg:text-5xl font-bold text-white mb-3 leading-tight" style={{ fontFamily: "'Sora', sans-serif" }}>
+                  Welcome Back,<br />
+                  <span className="text-blue-200">{user.name || "User"}! 👋</span>
+                </h1>
+                <p className="text-blue-200 text-xs sm:text-lg mb-6 max-w-lg">
+                  Your dream role is out there. You're <span className="text-white font-semibold">3 steps away</span> from landing your next opportunity.
+                </p>
+                {/* Search */}
+                <div className="flex gap-2 max-w-xl">
+                  <div className="flex-1 flex items-center gap-3 bg-white rounded-2xl px-1 py-1 sm:px-4 sm:py-3 shadow-xl">
+                    <span className="text-gray-400 text-lg shrink-0">🔍</span>
+                    <input
+                      type="text"
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                      placeholder="Search jobs, companies..."
+                      className="flex-1 text-gray-800 placeholder-gray-400 text-sm font-medium outline-none bg-transparent search-glow"
+                    />
+                    {search && (
+                      <button onClick={() => setSearch("")} className="text-gray-400 hover:text-gray-600 shrink-0">✕</button>
+                    )}
+                  </div>
+                  <button className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white px-5 py-3 rounded-2xl font-semibold text-sm border border-white/20 transition-all whitespace-nowrap"
+                    onClick={handleSearch}>
+                    Search
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
 
-      {/* JOB LISTINGS */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h2 className="text-xl font-bold text-gray-900" style={{ fontFamily: "'Sora', sans-serif" }}>
-              { "Latest Openings" }
-            </h2>
+        {/* JOB LISTINGS */}
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h2 className="text-xl font-bold text-gray-900" style={{ fontFamily: "'Sora', sans-serif" }}>
+                {"Latest Openings"}
+              </h2>
+            </div>
           </div>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-          {loading
-            ? null
-            : alljob.length === 0
-              ? (
-                <div className="col-span-full flex flex-col items-center justify-center py-20 text-center">
-                  <h3 className="text-lg font-semibold text-gray-700 mb-1">No jobs found</h3>
-                  <p className="text-gray-400 text-sm">Currently no jobs exist ..</p>
-                </div>
-              )
-              : alljob.slice(0, 6).map((alljob, i) => (
-                <div
-                  key={alljob._id}
-                  className="card-hover bg-white rounded-3xl border border-gray-100 shadow-sm cursor-pointer fade-in relative overflow-hidden flex flex-col"
-                  style={{ animationDelay: `${i * 60}ms` }}
-                >
-                  {/* Colored top accent bar */}
-                  <div className={`h-1.5 w-full bg-blue-500 opacity-80`} />
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+            {loading
+              ? null
+              : alljob.length === 0
+                ? (
+                  <div className="col-span-full flex flex-col items-center justify-center py-20 text-center">
+                    <h3 className="text-lg font-semibold text-gray-700 mb-1">No jobs found</h3>
+                    <p className="text-gray-400 text-sm">Currently no jobs exist ..</p>
+                  </div>
+                )
+                : alljob.slice(0, 6).map((alljob, i) => (
+                  <div
+                    key={alljob._id}
+                    className="card-hover bg-white rounded-3xl border border-gray-100 shadow-sm cursor-pointer fade-in relative overflow-hidden flex flex-col"
+                    style={{ animationDelay: `${i * 60}ms` }}
+                  >
+                    {/* Colored top accent bar */}
+                    <div className={`h-1.5 w-full bg-blue-500 opacity-80`} />
 
-                  <div className="p-6 flex flex-col flex-1">
-                    {/* Header row */}
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex items-center gap-3">
-                        <div className={`w-14 h-14 rounded-2xl bg-blue-500 flex items-center justify-center text-white font-bold text-2xl shrink-0 shadow-md`}
-                          style={{ fontFamily: "'Sora', sans-serif" }}>
-                          {alljob.company.name.charAt(0)}
-                        </div>
-                        <div>
-                          <h3 className="font-bold text-gray-900 text-base leading-snug" style={{ fontFamily: "'Sora', sans-serif" }}>
-                            {alljob.title}
-                          </h3>
-                          <p className="text-blue-600 text-sm font-semibold mt-0.5">{alljob.company.name}</p>
+                    <div className="p-6 flex flex-col flex-1">
+                      {/* Header row */}
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex items-center gap-3">
+                          <div className={`w-14 h-14 rounded-2xl bg-blue-500 flex items-center justify-center text-white font-bold text-2xl shrink-0 shadow-md`}
+                            style={{ fontFamily: "'Sora', sans-serif" }}>
+                            {alljob.company.name.charAt(0)}
+                          </div>
+                          <div>
+                            <h3 className="font-bold text-gray-900 text-base leading-snug" style={{ fontFamily: "'Sora', sans-serif" }}>
+                              {alljob.title}
+                            </h3>
+                            <p className="text-blue-600 text-sm font-semibold mt-0.5">{alljob.company.name}</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    {/* Meta pills row */}
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      <span className="flex items-center gap-1 text-xs text-gray-500 bg-gray-50 border border-gray-100 px-3 py-1 rounded-full font-medium">
-                        📍 {alljob.location}
-                      </span>
-                      <span className="flex items-center gap-1 text-xs text-emerald-700 bg-emerald-50 border border-emerald-100 px-3 py-1 rounded-full font-semibold">
-                        ⏱ {alljob.jobType}
-                      </span>
-                      <span className="flex items-center gap-1 text-xs text-blue-700 bg-blue-50 border border-blue-100 px-3 py-1 rounded-full font-semibold">
-                        💰 {alljob.salary}
-                      </span>
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-gray-500 text-sm leading-relaxed mb-4 line-clamp-2 flex-1">{alljob.description}</p>
-
-                   
-
-                    {/* Footer actions */}
-                    <div className="flex items-center justify-between pt-4 border-t border-gray-100 mt-auto">
-                      <div className="flex items-center gap-1.5 text-gray-400 text-xs">
-                        <span className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block" />
-                        Posted {alljob.createdAt ? new Date(alljob.createdAt).toLocaleDateString() : "N/A"}
+                      {/* Meta pills row */}
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        <span className="flex items-center gap-1 text-xs text-gray-500 bg-gray-50 border border-gray-100 px-3 py-1 rounded-full font-medium">
+                          📍 {alljob.location}
+                        </span>
+                        <span className="flex items-center gap-1 text-xs text-emerald-700 bg-emerald-50 border border-emerald-100 px-3 py-1 rounded-full font-semibold">
+                          ⏱ {alljob.jobType}
+                        </span>
+                        <span className="flex items-center gap-1 text-xs text-blue-700 bg-blue-50 border border-blue-100 px-3 py-1 rounded-full font-semibold">
+                          💰 {alljob.salary}
+                        </span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={() => navigate(`/jobdetails/${alljob._id}`)}
-                          className={`apply-btn px-5 py-2 rounded-xl text-sm font-semibold transition-all
+
+                      {/* Description */}
+                      <p className="text-gray-500 text-sm leading-relaxed mb-4 line-clamp-2 flex-1">{alljob.description}</p>
+
+
+
+                      {/* Footer actions */}
+                      <div className="flex items-center justify-between pt-4 border-t border-gray-100 mt-auto">
+                        <div className="flex items-center gap-1.5 text-gray-400 text-xs">
+                          <span className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block" />
+                          Posted {alljob.createdAt ? new Date(alljob.createdAt).toLocaleDateString() : "N/A"}
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => navigate(`/jobdetails/${alljob._id}`)}
+                            className={`apply-btn px-5 py-2 rounded-xl text-sm font-semibold transition-all
                            bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-200 hover:shadow-blue-300 hover:shadow-lg
                             }`}
-                        >
-                          view more
-                        </button>
+                          >
+                            view more
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))
-          }
-        </div>
-      </main>
+                ))
+            }
+          </div>
+        </main>
+      </div>
 
       {/* FOOTER */}
-      <Footer/>
+      <Footer />
     </div>
   );
 }
