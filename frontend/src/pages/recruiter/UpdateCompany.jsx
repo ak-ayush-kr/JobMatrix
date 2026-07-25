@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import axiosInstance from "../../utils/axios";
+import axiosInstance from "../../utils/axios.js";
 import { useNavigate } from "react-router-dom";
 const UpdateCompany = () => {
   const { id } = useParams();

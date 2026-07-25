@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getSocket } from "../../utils/socket";
-import { addNotice } from "../../redux/noticeSlice";
+import { getSocket } from "../../utils/socket.js";
+import { addNotice } from "../../redux/noticeSlice.js";
 
 export const SocketProvider = () => {
     const dispatch = useDispatch();

@@ -1,9 +1,9 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import authReducer from "./authslice";
-import jobReducer from "./jobSlice";
-import recruiterJobReducer from "./recruiterJobSlice";
-import companyReducer from "./companySlice";
-import noticeReducer from "./noticeSlice";
+import authReducer from "./authslice.js";
+import jobReducer from "./jobslice.js";
+import recruiterJobReducer from "./recruiterJobSlice.js";
+import companyReducer from "./companySlice.js";
+import noticeReducer from "./noticeSlice.js";
 
 import { persistReducer, persistStore } from "redux-persist";
 

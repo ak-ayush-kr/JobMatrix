@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { createJob } from "../../redux/recruiterJobSlice";
+import { createJob } from "../../redux/recruiterJobSlice.js";
 import { useState } from "react";
 
 const CreateJob = () => {

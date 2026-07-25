@@ -7,12 +7,12 @@ import {
 
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getSocket } from "../utils/socket";
-import { setJobs } from "../redux/jobSlice";
-import { setNotices, addNotice } from "../redux/noticeSlice";
+import { getSocket } from "../utils/socket.js";
+import { setJobs } from "../redux/jobslice.js";
+import { setNotices, addNotice } from "../redux/noticeSlice.js";
 
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import Navbar from "../components/navbar.jsx";
+import Footer from "../components/footer.jsx";
 
 function UserDashboard() {
 

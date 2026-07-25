@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { ChevronRight } from "lucide-react";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/navbar.jsx";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Footer from "../components/footer";
+import Footer from "../components/footer.jsx";
 
 function Alljobs() {
   const job = useSelector((state) => state.job.jobs);

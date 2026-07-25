@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { setUser } from '../redux/authslice';
+import { setUser } from '../redux/authslice.js';
 import { useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 

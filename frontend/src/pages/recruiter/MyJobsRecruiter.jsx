@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import JobCard from "../../components/recruiter/JobCard";
+import JobCard from "../../components/recruiter/JobCard.jsx";
 
 const MyJobsRecruiter = () => {
   const jobs = useSelector((state) => state.recruiterJobs.jobs);

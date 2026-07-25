@@ -2,7 +2,7 @@ import React from 'react'
 import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import Navbar from '../components/Navbar';
+import Navbar from '../components/navbar.jsx';
 import { ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 

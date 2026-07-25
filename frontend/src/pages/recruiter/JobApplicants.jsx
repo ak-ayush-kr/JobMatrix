@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axiosInstance from "../../utils/axios";
-import RecruiterNavbar from "../../components/recruiter/RecruiterNavbar";
+import axiosInstance from "../../utils/axios.js";
+import RecruiterNavbar from "../../components/recruiter/RecruiterNavbar.jsx";
 
 const JobApplicants = () => {
 

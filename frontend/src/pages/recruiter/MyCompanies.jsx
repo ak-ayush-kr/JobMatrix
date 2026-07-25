@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import axiosInstance from "../../utils/axios";
-import { setCompanies } from "../../redux/companySlice";
-import { setJobs } from "../../redux/jobslice";
+import axiosInstance from "../../utils/axios.js";
+import { setCompanies } from "../../redux/companySlice.js";
+import { setJobs } from "../../redux/jobslice.js";
 import { useNavigate } from "react-router-dom";
 
 const MyCompanies = () => {

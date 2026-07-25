@@ -1,6 +1,6 @@
 import React from 'react'
 import {useEffect} from "react";
-import { getSocket } from '../utils/socket';
+import { getSocket } from '../utils/socket.js';
 import { useSelector} from 'react-redux';
 
 function Notice(){

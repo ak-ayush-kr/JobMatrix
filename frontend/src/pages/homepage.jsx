@@ -1,5 +1,5 @@
 import { useState, useEffect, use } from "react";
-import { FEATURES, STEPS, NAV_LINKS } from "../data/constants";
+import { FEATURES, STEPS, NAV_LINKS } from "../data/constants.jsx";
 import dashimg from "../assets/dashimg.png";
 import { useNavigate } from "react-router-dom";
 

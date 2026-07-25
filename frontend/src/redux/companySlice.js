@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "../utils/axios";
+import axiosInstance from "../utils/axios.js";
 
-// 🔥 CREATE COMPANY API
+
 export const createCompany = createAsyncThunk(
   "company/createCompany",
   async (companyData, { rejectWithValue }) => {
@@ -25,7 +25,7 @@ const companySlice = createSlice({
     error: null,
   },
 
-  // ✅ ADD THIS
+
   reducers: {
     setCompanies: (state, action) => {
       state.companies = action.payload;
@@ -48,7 +48,7 @@ const companySlice = createSlice({
   },
 });
 
-// ✅ EXPORT THIS
+
 export const { setCompanies } = companySlice.actions;
 
 export default companySlice.reducer;

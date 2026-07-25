@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react';
-import Navbar from '../components/Navbar'
-import Footbar from '../components/footer';
+import Navbar from '../components/navbar.jsx'
+import Footbar from '../components/footer.jsx';
 import { Building } from 'lucide-react';
 
 const statusColors = {

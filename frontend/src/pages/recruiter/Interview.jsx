@@ -1,8 +1,8 @@
 import React from 'react'
 import { useEffect, useState } from 'react';
-import RecruiterNavbar from '../../components/recruiter/RecruiterNavbar';
+import RecruiterNavbar from '../../components/recruiter/RecruiterNavbar.jsx';
 import { User, Clock, Video } from "lucide-react";
-import Footer from '../../components/Footer';
+import Footer from '../../components/footer.jsx';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer,toast } from 'react-toastify';
 

@@ -13,8 +13,8 @@ import {
   Globe,
 } from "lucide-react";
 
-import Navbar from "../components/Navbar";
-import Footer from "../components/footer";
+import Navbar from "../components/navbar.jsx";
+import Footer from "../components/footer.jsx";
 
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";

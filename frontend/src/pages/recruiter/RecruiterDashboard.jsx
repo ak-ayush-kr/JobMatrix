@@ -1,6 +1,6 @@
-import RecruiterNavbar from "../../components/recruiter/RecruiterNavbar";
+import RecruiterNavbar from "../../components/recruiter/RecruiterNavbar.jsx";
 import { useNavigate } from "react-router-dom";
-import Footer from "../../components/footer";
+import Footer from "../../components/footer.jsx";
 import { Building2, BriefcaseBusiness, Users, Users2 } from "lucide-react";
 
 const RecruiterDashboard = () => {

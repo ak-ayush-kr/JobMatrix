@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../../utils/axios";
+import axiosInstance from "../../utils/axios.js";
 
 const EnrollCompany = () => {
   const { loading } = useSelector((state) => state.company);

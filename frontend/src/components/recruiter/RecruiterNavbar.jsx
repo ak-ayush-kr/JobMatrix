@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Briefcase } from "lucide-react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { logoutUser } from "../../redux/authslice";
+import { logoutUser } from "../../redux/authslice.js";
 
 const RecruiterNavbar = () => {
   const navigate = useNavigate();

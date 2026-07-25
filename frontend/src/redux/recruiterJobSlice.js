@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "../utils/axios";
+import axiosInstance from "../utils/axios.js";
 
 //CREATE JOB API
 export const createJob = createAsyncThunk(
