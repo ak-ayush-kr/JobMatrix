@@ -71,7 +71,7 @@ function JobDetailsPage() {
   const applyJobs = async () => {
     try {
       const res = await fetch(
-        `http://localhost:5000/api/application/apply/${jobId}`,
+        `${import.meta.env.VITE_API_URL}/api/application/apply/${jobId}`,
         {
           method: "POST",
           credentials: "include",
@@ -104,7 +104,7 @@ function JobDetailsPage() {
     try {
 
       const res = await fetch(
-        `http://localhost:5000/api/application/status/${jobId}`,
+        `${import.meta.env.VITE_API_URL}/api/application/status/${jobId}`,
         {
           method: "GET",
           credentials: "include",
@@ -133,7 +133,7 @@ function JobDetailsPage() {
     const getjobdetails = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/job/getJobById/${jobId}`,
+          `${import.meta.env.VITE_API_URL}/api/job/getJobById/${jobId}`,
           {
             method: "GET",
             credentials: "include",

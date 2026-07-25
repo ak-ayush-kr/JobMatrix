@@ -39,7 +39,7 @@ function UserDashboard() {
   useEffect(() => {
     const fetchNotices = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/users/getNotices", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/users/getNotices`, {
           method: "GET",
           credentials: "include",
         });
@@ -81,7 +81,7 @@ function UserDashboard() {
 
         // GET ALL JOBS
         const jobsRes = await fetch(
-          "http://localhost:5000/api/job/getAllJobs",
+          `${import.meta.env.VITE_API_URL}/api/job/getAllJobs`,
           {
             method: "GET",
             credentials: "include",
@@ -92,7 +92,7 @@ function UserDashboard() {
 
         // GET APPLIED JOBS
         const appliedRes = await fetch(
-          "http://localhost:5000/api/job/getAppliedJobs",
+          `${import.meta.env.VITE_API_URL}/api/job/getAppliedJobs`,
           {
             method: "GET",
             credentials: "include",
@@ -164,7 +164,7 @@ function UserDashboard() {
       setApplyingJobId(jobId);
 
       const res = await fetch(
-        `http://localhost:5000/api/application/apply/${jobId}`,
+        `${import.meta.env.VITE_API_URL}/api/application/apply/${jobId}`,
         {
           method: "POST",
           credentials: "include",

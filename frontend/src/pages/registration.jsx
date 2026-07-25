@@ -34,7 +34,7 @@ function Registration() {
         if(photo) formdata.append("profilePhoto", photo);
 
         try {
-            const res = await fetch("http://localhost:5000/api/users/register", {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/users/register`, {
                 method: "POST",
                 body: formdata,
             });

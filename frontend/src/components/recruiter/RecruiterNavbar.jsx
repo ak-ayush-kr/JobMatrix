@@ -17,7 +17,7 @@ const RecruiterNavbar = () => {
   const dispatch = useDispatch();
   const handleLogout = async()=>{
     console.log("logout function called");
-    const result = await fetch("http://localhost:5000/api/users/logout",{
+    const result = await fetch(`${import.meta.env.VITE_API_URL}/api/users/logout`,{
         method:"GET",
         credentials:"include",
     });

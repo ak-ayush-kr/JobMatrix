@@ -16,7 +16,7 @@ const Myjobs = () => {
   useEffect(() => {
     try {
       const getAppliedJobs = async () => {
-        const res = await fetch("http://localhost:5000/api/job/getAppliedJobs", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/job/getAppliedJobs`, {
           method: "GET",
           credentials: "include",
         });

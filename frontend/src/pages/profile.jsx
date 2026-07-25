@@ -103,7 +103,7 @@ function Profile() {
     }
     
     try {
-      const res = await fetch("http://localhost:5000/api/users/updateProfile", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/users/updateProfile`, {
         method: "POST",
         credentials: "include",
         body: formData

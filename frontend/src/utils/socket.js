@@ -3,7 +3,7 @@ let socket = null;
 
 export const connectSocket = (userId,role) => {
     if (!socket && userId) {
-        socket = io("http://localhost:5000", {
+        socket = io(`${import.meta.env.VITE_API_URL}`, {
             query: {
                 userId,
                 role

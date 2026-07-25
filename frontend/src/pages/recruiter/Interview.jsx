@@ -10,7 +10,7 @@ const Interview = () => {
     const navigate = useNavigate();
     const handleRoom = async(id) =>{
         try {
-            const result = await fetch(`http://localhost:5000/api/users/interview/${id}`,{
+            const result = await fetch(`${import.meta.env.VITE_API_URL}/api/users/interview/${id}`,{
                 method:"GET",
                 credentials:"include",
             });
@@ -31,7 +31,7 @@ const Interview = () => {
     useEffect(() => {
         const fetchlist = async () => {
             try {
-                const result = await fetch("http://localhost:5000/api/users/interviewlist", {
+                const result = await fetch(`${import.meta.env.VITE_API_URL}/api/users/interviewlist`, {
                     method: "GET",
                     credentials: "include",
                 })

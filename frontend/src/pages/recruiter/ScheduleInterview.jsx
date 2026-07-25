@@ -24,7 +24,7 @@ const ScheduleInterview = () => {
         console.log("Sending Data => ", formData.interviewDate);
         try {
             const scheduledDate = formData.interviewDate;
-            const res = await fetch("http://localhost:5000/api/application/scheduled",{
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/application/scheduled`,{
                 method:"POST",
                 headers:{
                     "Content-Type": "application/json",

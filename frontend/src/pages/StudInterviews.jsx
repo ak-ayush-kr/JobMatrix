@@ -12,7 +12,7 @@ const StudInterviews = () => {
     useEffect(() => {
         const fetchlist = async () => {
             try {
-                const result = await fetch("http://localhost:5000/api/users/interviewlist", {
+                const result = await fetch(`${import.meta.env.VITE_API_URL}/api/users/interviewlist`, {
                     method: "GET",
                     credentials: "include",
                 })
@@ -31,7 +31,7 @@ const StudInterviews = () => {
     const handleRoom = async(id) =>{
         try {
             console.log("handled room")
-            const result = await fetch(`http://localhost:5000/api/users/interview/${id}`,{
+            const result = await fetch(`${import.meta.env.VITE_API_URL}/api/users/interview/${id}`,{
                 method:"GET",
                 credentials:"include",
             });

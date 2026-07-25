@@ -20,7 +20,7 @@ const InterviewRoom = () => {
             joined.current = true;
 
             const res = await fetch(
-                `http://localhost:5000/api/application/gettoken/${roomId}`, {
+                `${import.meta.env.VITE_API_URL}/api/application/gettoken/${roomId}`, {
                 method: "GET",
                 credentials: "include",
             }
