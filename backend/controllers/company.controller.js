@@ -5,7 +5,7 @@ import getDataUri from "../utils/datauri.js";
 import cloudinary from "../utils/cloudinary.js";
 
 
-//registering company by name and user id
+
 export const registerCompany=async(req,res)=>{
     console.log("register company controller called");
     try{
@@ -18,7 +18,6 @@ export const registerCompany=async(req,res)=>{
             });
         }
 
-        //check is any company already exist with that name
         let companyExist=await Company.findOne({name:companyName});
         if(companyExist){
             return res.status(400).json({
@@ -29,7 +28,7 @@ export const registerCompany=async(req,res)=>{
         if(!req.user.id){
             console.log("user not found");
         }
-        //create company
+    
         let company=await Company.create({
             name:companyName,
             userId:req.user.id

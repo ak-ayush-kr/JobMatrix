@@ -28,7 +28,7 @@ const CreateJob = () => {
 
     try {
       await dispatch(createJob(formData)).unwrap();
-      alert("✅ Job Created Successfully");
+      alert("Job Created Successfully");
 
       // reset form
       setFormData({
@@ -44,7 +44,7 @@ const CreateJob = () => {
       });
 
     } catch (err) {
-      alert(err?.message || "❌ Failed to create job");
+      alert(err?.message || "Failed to create job");
     }
   };
 
@@ -132,7 +132,7 @@ const CreateJob = () => {
           required
         />
 
-        {/* 🔥 COMPANY DROPDOWN */}
+   
         <select
           name="companyId"
           value={formData.companyId}

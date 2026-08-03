@@ -53,7 +53,6 @@ const Search = () => {
                     </div>
                   </div>
 
-                  {/* Meta Info */}
                   <div className="flex flex-wrap gap-2 text-xs mb-3">
                     <span className="bg-gray-100 px-2 py-1 rounded">
                       📍 {jobs?.location}
@@ -66,7 +65,7 @@ const Search = () => {
                     </span>
                   </div>
 
-                  {/* Description */}
+    
                   <p className="text-gray-500 text-sm mb-3">
                     {jobs?.description}
                   </p>

@@ -191,9 +191,8 @@ function JobDetailsPage() {
       <Navbar active="Home" />
 
       <div className="max-w-6xl mx-auto px-4 py-5">
-        {/* LEFT COLUMN */}
+
         <div className="flex flex-col gap-6">
-          {/* HEADER CARD */}
           <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-linear-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-xl shadow-md shrink-0">
@@ -213,7 +212,6 @@ function JobDetailsPage() {
                     </div>
                   </div>
 
-                  {/* DESKTOP BUTTON */}
                   <div className=" sm:flex flex-col items-end gap-2">
                     {applicationStatus ? (
                       <button
@@ -238,7 +236,7 @@ function JobDetailsPage() {
                   </div>
                 </div>
 
-                {/* TAGS */}
+  
                 <div className="flex flex-wrap gap-2 mt-3">
 
                   <span className="inline-flex items-center gap-1.5 bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full border border-blue-100">
@@ -263,7 +261,7 @@ function JobDetailsPage() {
 
             </div>
 
-            {/* INFO ROW */}
+     
             <div className="mt-5 pt-5 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-3 gap-4">
 
               <div className="flex items-center gap-2.5 text-slate-600">
@@ -361,7 +359,7 @@ function JobDetailsPage() {
 
       </div>
 
-      {/* STATUS DIALOG */}
+ 
       {showStatusDialog && (
 
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
@@ -447,7 +445,7 @@ function JobDetailsPage() {
 
               </div>
 
-              {/* INTERVIEW DETAILS */}
+    
               {applicationData?.status ===
                 "interview_scheduled" && (
 
@@ -514,7 +512,6 @@ function JobDetailsPage() {
 
       )}
 
-      {/* Stats Cards */}
       <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-4">
         {[
           {
@@ -553,7 +550,7 @@ function JobDetailsPage() {
         ))}
       </div>
 
-      {/* Job Description */}
+    
       <div className="max-w-6xl mx-auto px-4 py-5 ">
         <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 hover:shadow-md transition-shadow duration-300">
           <div className="flex items-center gap-2 mb-4">
@@ -584,11 +581,10 @@ function JobDetailsPage() {
       </div>
 
 
-      {/* RIGHT COLUMN */}
       <div className="max-w-6xl mx-auto px-4 mb-2">
       <div className="flex flex-col gap-4 mt-5">
 
-        {/* Apply CTA Card */}
+  
         <div className="bg-linear-to-br from-blue-500 to-blue-700 rounded-2xl p-6 text-white shadow-lg ">
           <div className="flex flex-col items-center justify-center">
             <h3 className="font-bold text-lg mb-1">Ready to apply?</h3>
@@ -611,7 +607,7 @@ function JobDetailsPage() {
           )}
         </div>
 
-        {/* Company Info Card */}
+    
         <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 hover:shadow-md transition-shadow duration-300">
           <div className="flex items-center gap-2 mb-4">
             <div className="w-1 h-5 bg-blue-600 rounded-full"></div>

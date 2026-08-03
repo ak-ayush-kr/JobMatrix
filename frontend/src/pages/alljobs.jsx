@@ -41,7 +41,6 @@ function Alljobs() {
   const FilterSidebar = () => (
     <div className="p-4 space-y-6">
 
-      {/* Salary */}
       <div>
         <h3 className="font-semibold mb-2">Salary</h3>
         {["0-100000", "100000-500000", ">500000"].map((range) => (
@@ -57,7 +56,7 @@ function Alljobs() {
         ))}
       </div>
 
-      {/* Location */}
+
       <div>
         <h3 className="font-semibold mb-2">Location</h3>
         {["Mumbai", "Hyderabad", "Bangalore", "Delhi", "Pune"].map((loc) => (
@@ -73,7 +72,6 @@ function Alljobs() {
         ))}
       </div>
 
-      {/* Reset */}
       <button
         onClick={() => setFilters({ salary: "", location: "" })}
         className="text-sm text-red-500"
@@ -87,7 +85,6 @@ function Alljobs() {
     <div className="min-h-screen bg-white">
       <Navbar active="All Jobs" />
 
-      {/* Hero */}
       <div className="pt-16">
       <section className="bg-linear-to-br from-blue-700 via-blue-600 to-indigo-700 text-center py-8">
         <h1 className="text-3xl font-bold text-white">
@@ -98,7 +95,7 @@ function Alljobs() {
         </p>
       </section>
 
-      {/* Layout */}
+
       <div className="flex gap-6 p-4 lg:p-8">
 
         <div className="hidden md:block w-64 bg-white shadow rounded-xl h-fit sticky top-20">
@@ -108,7 +105,7 @@ function Alljobs() {
      
         <div className="flex-1">
 
-          {/* Mobile Filter Button */}
+
           <button
             className="md:hidden mb-4 px-4 py-2 bg-blue-600 text-white rounded"
             onClick={() => setShowFilter(true)}
@@ -116,7 +113,6 @@ function Alljobs() {
             Filters
           </button>
 
-          {/* No Jobs */}
           {filteredJobs?.length === 0 ? (
             <div className="text-center py-20 text-gray-400">
               <h3>No jobs found</h3>
@@ -165,7 +161,7 @@ function Alljobs() {
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+  
       {showFilter && (
         <div className="fixed inset-0 bg-black/50 z-50">
           <div className="bg-white w-64 h-full p-4">

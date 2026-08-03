@@ -209,10 +209,8 @@ function UserDashboard() {
 
   return (
     <div className="min-h-screen bg-[#f0f4ff]" style={{ fontFamily: "'DM Sans', 'Segoe UI', sans-serif" }}>
-      {/* NAVBAR */}
+  
       <Navbar active="Home" />
-
-      {/* HERO */}
       <div className="pt-16">
         <div className="relative overflow-hidden bg-linear-to-br from-blue-600 via-blue-700 to-indigo-800 p-2">
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
@@ -256,7 +254,6 @@ function UserDashboard() {
         </div>
 
 
-        {/* JOB LISTINGS */}
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex items-center justify-between mb-6">
             <div>
@@ -282,7 +279,7 @@ function UserDashboard() {
                     className="card-hover bg-white rounded-3xl border border-gray-100 shadow-sm cursor-pointer fade-in relative overflow-hidden flex flex-col"
                     style={{ animationDelay: `${i * 60}ms` }}
                   >
-                    {/* Colored top accent bar */}
+
                     <div className={`h-1.5 w-full bg-blue-500 opacity-80`} />
 
                     <div className="p-6 flex flex-col flex-1">
@@ -302,7 +299,7 @@ function UserDashboard() {
                         </div>
                       </div>
 
-                      {/* Meta pills row */}
+                
                       <div className="flex flex-wrap gap-2 mb-4">
                         <span className="flex items-center gap-1 text-xs text-gray-500 bg-gray-50 border border-gray-100 px-3 py-1 rounded-full font-medium">
                           📍 {alljob.location}
@@ -315,12 +312,11 @@ function UserDashboard() {
                         </span>
                       </div>
 
-                      {/* Description */}
+           
                       <p className="text-gray-500 text-sm leading-relaxed mb-4 line-clamp-2 flex-1">{alljob.description}</p>
 
 
 
-                      {/* Footer actions */}
                       <div className="flex items-center justify-between pt-4 border-t border-gray-100 mt-auto">
                         <div className="flex items-center gap-1.5 text-gray-400 text-xs">
                           <span className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block" />
@@ -345,7 +341,7 @@ function UserDashboard() {
         </main>
       </div>
 
-      {/* FOOTER */}
+
       <Footer />
     </div>
   );

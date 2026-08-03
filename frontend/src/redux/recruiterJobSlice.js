@@ -30,7 +30,7 @@ const recruiterJobSlice = createSlice({
       })
       .addCase(createJob.fulfilled, (state, action) => {
         state.loading = false;
-        state.jobs.unshift(action.payload); // 🔥 add new job on top
+        state.jobs.unshift(action.payload); 
       })
       .addCase(createJob.rejected, (state, action) => {
         state.loading = false;

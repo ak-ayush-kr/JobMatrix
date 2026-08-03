@@ -120,7 +120,7 @@ function Profile() {
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: "'DM Sans', 'Segoe UI', sans-serif" }}>
       <div className="relative z-10 max-w-3xl mx-auto px-4 py-10">
-        {/* Top Nav */}
+        
         <div className="flex items-center gap-3 mb-8">
           <button className="flex items-center gap-2 text-[#64748b] hover:text-[#94a3b8] text-sm transition-colors duration-150 group"
           onClick={()=>{navigate("/userdashboard")}}>
@@ -131,7 +131,7 @@ function Profile() {
           <span className="text-[#3b82f6] text-sm font-medium">Edit Profile</span>
         </div>
 
-        {/* Header */}
+
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-1">
             <div className="w-8 h-8 rounded-lg bg-[#1d4ed8]/20 border border-[#3b82f6]/30 flex items-center justify-center">
@@ -143,7 +143,7 @@ function Profile() {
           <p className="text-[#64748b] text-sm mt-1.5">Update your personal and professional details</p>
         </div>
 
-        {/* Success Toast */}
+     =
         {saved && (
           <div className="mb-6 flex items-center gap-3 bg-white border border-[#16a34a]/40 text-[#4ade80] text-sm px-4 py-3 rounded-xl animate-pulse">
             <CheckCircle size={16} />
@@ -151,7 +151,6 @@ function Profile() {
           </div>
         )}
 
-        {/* Profile Photo Card */}
         <div className="bg-white border border-[#1e2d45] rounded-2xl p-6 mb-5 backdrop-blur-sm shadow-xl">
           <h2 className="text-gray-700 text-xs font-semibold uppercase tracking-widest mb-5">Profile Photo</h2>
           <div className="flex items-center gap-6">
@@ -185,12 +184,12 @@ function Profile() {
           </div>
         </div>
 
-        {/* Personal Info Card */}
+
         <div className="bg-white border border-[#1e2d45] rounded-2xl p-6 mb-5 backdrop-blur-sm shadow-xl">
           <h2 className="text-[#333435] text-xs font-semibold uppercase tracking-widest mb-5">Personal Information</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
 
-            {/* Full Name */}
+          
             <div className="sm:col-span-2">
               <label className="block text-black text-xs font-medium mb-2">Full Name</label>
               <div className="relative">
@@ -205,7 +204,7 @@ function Profile() {
               </div>
             </div>
 
-            {/* Email */}
+     
             <div>
               <label className="block text-[#94a3b8] text-xs font-medium mb-2">Email Address</label>
               <div className="relative">
@@ -220,7 +219,7 @@ function Profile() {
               <p className="text-[#4a5568] text-xs mt-1.5">Email cannot be changed here</p>
             </div>
 
-            {/* Phone */}
+       
             <div>
               <label className="block text-black text-xs font-medium mb-2">Phone Number</label>
               <div className="relative">
@@ -235,7 +234,7 @@ function Profile() {
               </div>
             </div>
 
-            {/* Bio */}
+  
             <div className="sm:col-span-2">
               <div className="flex items-center justify-between mb-2">
                 <label className="block text-black text-xs font-medium">Professional Bio</label>
@@ -257,7 +256,7 @@ function Profile() {
           </div>
         </div>
 
-        {/* Skills Card */}
+      
         <div className="bg-white border border-[#1e2d45] rounded-2xl p-6 mb-5 backdrop-blur-sm shadow-xl">
           <h2 className="text-black text-xs font-semibold uppercase tracking-widest mb-1">Skills</h2>
           <p className="text-black text-xs mb-4">Add up to 15 skills. Press Enter or comma to add.</p>
@@ -303,7 +302,7 @@ function Profile() {
           )}
         </div>
 
-        {/* Resume Card */}
+       
         <div className="bg-white border border-[#1e2d45] rounded-2xl p-6 mb-8 backdrop-blur-sm shadow-xl">
           <h2 className="text-black text-xs font-semibold uppercase tracking-widest mb-1">Resume</h2>
           <p className="text-black text-xs mb-5">Upload your latest resume. PDF or DOCX, max 10MB.</p>
@@ -331,7 +330,6 @@ function Profile() {
           </div>
         </div>
 
-        {/* Action Buttons */}
         <div className="flex flex-col-reverse sm:flex-row items-center justify-end gap-3">
           <button
             onClick={updateProfile}
