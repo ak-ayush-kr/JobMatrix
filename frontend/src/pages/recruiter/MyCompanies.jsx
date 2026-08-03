@@ -106,7 +106,7 @@ const MyCompanies = () => {
 
               </div>
 
-              {/* JOB SECTION */}
+           
               <div className="mt-4">
 
                 <h4 className="font-semibold text-lg mb-4 text-gray-700">
@@ -163,7 +163,7 @@ const MyCompanies = () => {
 
                           </div>
 
-                          {/* RIGHT */}
+                  
                           <div className="flex gap-3">
 
                             <button

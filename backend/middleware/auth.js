@@ -12,9 +12,6 @@ const getUser = async (req, res, next) => {
             return res.status(401).json({ message: "Unauthorized request" });
         }
 
-        // Declare decodedToken here so it exists in the outer scope
-        
-
         try {
             const decodedToken = jwt.verify(accessToken, process.env.JWT_SECRET);
            // console.log("token data is: ", decodedToken);

@@ -48,7 +48,6 @@ const JobApplicants = () => {
       <RecruiterNavbar />
       <div className="p-6 bg-gray-50 min-h-screen">
 
-        {/* JOB DETAILS */}
 
         {job && (
           <div className="bg-white rounded-xl shadow p-6 mb-6">

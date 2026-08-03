@@ -317,7 +317,6 @@ export const deleteJob = async (req, res) => {
             });
         }
 
-        // security check
         if (
             job.created_by.toString()
             !== req.user.id
@@ -328,12 +327,10 @@ export const deleteJob = async (req, res) => {
             });
         }
 
-        // delete all related applications
+    
         await Application.deleteMany({
             job: jobId
         });
-
-        // delete job
         await Job.findByIdAndDelete(jobId);
 
         return res.status(200).json({

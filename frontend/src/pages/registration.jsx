@@ -91,7 +91,7 @@ function Registration() {
                                 </div>
                             </div>
 
-                            {/* Email */}
+                           
                             <div className="flex flex-col gap-1">
                                 <label className="text-sm font-semibold text-slate-700">Email Address</label>
                                 <div className="relative group">
@@ -134,7 +134,6 @@ function Registration() {
                                 </div>
                             </div>
 
-                            {/* Phone */}
                             <div className="flex flex-col gap-1">
                                 <label className="text-sm font-semibold text-slate-700">Phone Number</label>
                                 <div className="relative group">
@@ -152,7 +151,7 @@ function Registration() {
                             </div>
                         </div>
 
-                        {/* ── Role Selection ── */}
+                  
                         <div className="flex flex-col gap-1.5">
                             <label className="text-sm font-semibold text-slate-700">I am a…</label>
                             <div className="grid grid-cols-2 gap-3">
@@ -188,7 +187,7 @@ function Registration() {
                             </div>
                         </div>
 
-                        {/* ── Profile Photo ── */}
+                  
                         <div className="flex flex-col gap-1">
                             <label className="text-sm font-semibold text-slate-700">Profile Photo</label>
                             <div className="flex items-center gap-4">
@@ -215,7 +214,6 @@ function Registration() {
                             </div>
                         </div>
 
-                        {/* ── Submit ── */}
                         <button
                             type="button"
                             disabled={loading}
@@ -228,7 +226,7 @@ function Registration() {
                             }
                         </button>
 
-                        {/* ── Login link ── */}
+               
                         <p className="text-center text-sm text-slate-500">
                             Already have an account?{" "}
                             <span className="text-blue-600 font-semibold hover:underline cursor-pointer">Login</span>

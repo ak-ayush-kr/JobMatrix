@@ -77,7 +77,6 @@ function Login() {
     
 
 
-              {/* Email */}
               <div className="flex flex-col gap-1">
                 <label className="text-sm font-semibold text-slate-700">Email Address</label>
                 <div className="relative group">
@@ -122,8 +121,7 @@ function Login() {
 
          
           
-
-            {/* ── Role Selection ── */}
+=
             <div className="flex flex-col gap-1.5">
               <label className="text-sm font-semibold text-slate-700">I am a…</label>
               <div className="grid grid-cols-2 gap-3">
@@ -160,7 +158,6 @@ function Login() {
             </div>
 
   
-            {/*  form submission button */}
             <button
               type="button"
               disabled={loading}
@@ -173,7 +170,6 @@ function Login() {
               }
             </button>
 
-            {/* ── for sign up link ── */}
             <p className="text-center text-sm text-slate-500">
               Don't have an account?{" "}
               <span className="text-blue-600 font-semibold hover:underline cursor-pointer">Sign Up</span>

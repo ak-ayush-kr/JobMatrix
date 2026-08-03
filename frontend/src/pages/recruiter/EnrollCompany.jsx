@@ -12,7 +12,6 @@ const EnrollCompany = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // 🔥 validation
     if (!companyName.trim()) {
       return alert("Company name required");
     }
@@ -25,17 +24,13 @@ const EnrollCompany = () => {
 
       console.log("API response:", res.data); // debug
 
-      alert("✅ Company Registered Successfully");
-
-      // 🔥 redirect to update page
+      alert("Company Registered Successfully");
       navigate(`/update-company/${res.data.data._id}`);
-
-      // 🔥 clear input
       setCompanyName("");
 
     } catch (err) {
       console.log(err.response?.data || err);
-      alert(err.response?.data?.message || "❌ Failed to register company");
+      alert(err.response?.data?.message || "Failed to register company");
     }
   };
 

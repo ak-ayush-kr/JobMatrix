@@ -42,10 +42,10 @@ const UpdateCompany = () => {
         },
       });
 
-      alert("✅ Company Updated Successfully");
+      alert("Company Updated Successfully");
       navigate("/recruiter/dashboard")
     } catch (error) {
-      alert("❌ Update Failed");
+      alert("Update Failed");
     }
   };
 

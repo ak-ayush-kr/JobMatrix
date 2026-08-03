@@ -18,12 +18,12 @@ const storage = {
 const rootReducer = combineReducers({
   auth: authReducer,
   job: jobReducer,
-  recruiterJobs: recruiterJobReducer, // recruiter
+  recruiterJobs: recruiterJobReducer, 
   company: companyReducer,
   noticifications: noticeReducer,
 });
 
-// persist config
+
 const persistConfig = {
   key: "root",
   storage,
@@ -42,5 +42,5 @@ export const store = configureStore({
     }),
 });
 
-//  export persistor
+
 export const persistor = persistStore(store);

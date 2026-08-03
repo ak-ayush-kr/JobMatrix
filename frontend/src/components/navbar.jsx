@@ -43,7 +43,7 @@ const Navbar = (props) => {
     <nav className="absolute left-0 w-full top-0 z-50 bg-white/90 backdrop-blur-md border-b border-blue-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
+       
           <div className="flex items-center gap-2 shrink-0">
             <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center shadow-sm">
               <Briefcase size={14} className="text-white" />
@@ -53,7 +53,7 @@ const Navbar = (props) => {
             </span>
           </div>
 
-          {/* Desktop Nav */}
+      
           <div className="hidden lg:flex items-center gap-1">
             {navItems.map((item) => (
               <button
@@ -70,7 +70,7 @@ const Navbar = (props) => {
             ))}
           </div>
 
-          {/* Right side */}
+     
           <div className="flex items-center gap-1">
             <button onClick={() => { navigate("/profile") }} className='whitespace-nowrap'>
               <div className="hidden sm:flex items-center gap-2 bg-gray-50 rounded-xl px-3 py-1.5 cursor-pointer hover:bg-gray-100 transition-colors">
@@ -92,7 +92,6 @@ const Navbar = (props) => {
         </div>
       </div>
 
-      {/* Mobile Nav */}
       {mobileMenuOpen && (
         <div className="absolute top-full left-0 z-50 w-full bg-white shadow-lg border-t border-gray-100 md:hidden">
           <div className="px-4 py-3 flex flex-col gap-1">
