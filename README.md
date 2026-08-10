@@ -9,7 +9,7 @@
 <h2>📸 Dashboard Preview</h2>
 
 <p align="center">
-  <img src="./screenshots/dashboard.png" alt="JobMatrix Dashboard" width="900"/>
+  <img src="./ss.png" alt="JobMatrix Dashboard" width="500"/>
 </p>
 
 <h2>🚀 Features</h2>
