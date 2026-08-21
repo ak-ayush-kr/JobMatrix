@@ -275,7 +275,7 @@ function UserDashboard() {
                 )
                 : alljob.slice(0, 6).map((alljob, i) => (
                   <div
-                    key={alljob._id}
+                    key={alljob?._id}
                     className="card-hover bg-white rounded-3xl border border-gray-100 shadow-sm cursor-pointer fade-in relative overflow-hidden flex flex-col"
                     style={{ animationDelay: `${i * 60}ms` }}
                   >
@@ -288,13 +288,13 @@ function UserDashboard() {
                         <div className="flex items-center gap-3">
                           <div className={`w-14 h-14 rounded-2xl bg-blue-500 flex items-center justify-center text-white font-bold text-2xl shrink-0 shadow-md`}
                             style={{ fontFamily: "'Sora', sans-serif" }}>
-                            {alljob.company.name.charAt(0)}
+                            {alljob?.company?.name?.charAt(0)}
                           </div>
                           <div>
                             <h3 className="font-bold text-gray-900 text-base leading-snug" style={{ fontFamily: "'Sora', sans-serif" }}>
-                              {alljob.title}
+                              {alljob?.title}
                             </h3>
-                            <p className="text-blue-600 text-sm font-semibold mt-0.5">{alljob.company.name}</p>
+                            <p className="text-blue-600 text-sm font-semibold mt-0.5">{alljob?.company?.name}</p>
                           </div>
                         </div>
                       </div>
@@ -302,29 +302,29 @@ function UserDashboard() {
                 
                       <div className="flex flex-wrap gap-2 mb-4">
                         <span className="flex items-center gap-1 text-xs text-gray-500 bg-gray-50 border border-gray-100 px-3 py-1 rounded-full font-medium">
-                          📍 {alljob.location}
+                          📍 {alljob?.location}
                         </span>
                         <span className="flex items-center gap-1 text-xs text-emerald-700 bg-emerald-50 border border-emerald-100 px-3 py-1 rounded-full font-semibold">
-                          ⏱ {alljob.jobType}
+                          ⏱ {alljob?.jobType}
                         </span>
                         <span className="flex items-center gap-1 text-xs text-blue-700 bg-blue-50 border border-blue-100 px-3 py-1 rounded-full font-semibold">
-                          💰 {alljob.salary}
+                          💰 {alljob?.salary}
                         </span>
                       </div>
 
            
-                      <p className="text-gray-500 text-sm leading-relaxed mb-4 line-clamp-2 flex-1">{alljob.description}</p>
+                      <p className="text-gray-500 text-sm leading-relaxed mb-4 line-clamp-2 flex-1">{alljob?.description}</p>
 
 
 
                       <div className="flex items-center justify-between pt-4 border-t border-gray-100 mt-auto">
                         <div className="flex items-center gap-1.5 text-gray-400 text-xs">
                           <span className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block" />
-                          Posted {alljob.createdAt ? new Date(alljob.createdAt).toLocaleDateString() : "N/A"}
+                          Posted {alljob?.createdAt ? new Date(alljob?.createdAt).toLocaleDateString() : "N/A"}
                         </div>
                         <div className="flex items-center gap-2">
                           <button
-                            onClick={() => navigate(`/jobdetails/${alljob._id}`)}
+                            onClick={() => navigate(`/jobdetails/${alljob?.id}`)}
                             className={`apply-btn px-5 py-2 rounded-xl text-sm font-semibold transition-all
                            bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-200 hover:shadow-blue-300 hover:shadow-lg
                             }`}
