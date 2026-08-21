@@ -5,7 +5,7 @@
 </p>
 <p> JobMatrix is a full-stack job portal that connects job seekers, recruiters, and companies on a single platform. It provides job discovery,
   applications, recruitment management, and intelligent job matching.</p>
-<p> <a href="https://job-matrix-beta.vercel.app/">JobMatrix</a> </p>
+<p> <a href="https://job-matrix-xoem.vercel.app/">JobMatrix</a> </p>
 <h2>📸 Dashboard Preview</h2>
 
 <p align="center">
