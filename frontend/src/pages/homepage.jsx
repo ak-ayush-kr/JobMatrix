@@ -9,10 +9,6 @@ import { Briefcase } from "lucide-react";
 function HeroIllustration() {
   return (
     <div className="relative w-full max-w-lg mx-auto">
-
-      <div className="absolute -top-8 -right-8 w-64 h-64 bg-blue-200 rounded-full opacity-30 blur-3xl animate-pulse" />
-      <div className="absolute -bottom-8 -left-8 w-48 h-48 bg-cyan-200 rounded-full opacity-30 blur-2xl animate-pulse" style={{animationDelay:"1s"}} />
-
       <img
         src={dashimg}
         alt="JobMatrix"
@@ -123,7 +119,7 @@ function homepage() {
         </section>
 
         <section>
-            <div className="flex-1 w-full float-anim mt-10">
+            <div className="flex-1 w-full mt-10">
                 <HeroIllustration />
             </div>
         </section>
