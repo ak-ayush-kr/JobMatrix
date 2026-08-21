@@ -324,7 +324,7 @@ function UserDashboard() {
                         </div>
                         <div className="flex items-center gap-2">
                           <button
-                            onClick={() => navigate(`/jobdetails/${alljob?.id}`)}
+                            onClick={() => navigate(`/jobdetails/${alljob?._id}`)}
                             className={`apply-btn px-5 py-2 rounded-xl text-sm font-semibold transition-all
                            bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-200 hover:shadow-blue-300 hover:shadow-lg
                             }`}
